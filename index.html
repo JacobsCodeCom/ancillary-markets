@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ancillary Services Insights</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Price forecasts for Swedish reserve markets (FCR, mFRR) and day-ahead spot in SE1 to SE4, issued before each market gate, timestamped by an independent authority and scored against the outcome hour by hour.">
+<link rel="canonical" href="https://jacobscodecom.github.io/ancillary-markets/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ancillary Services Insights">
+<meta property="og:title" content="Ancillary Services Insights">
+<meta property="og:description" content="Reserve and spot price forecasts for SE1 to SE4, issued before each market gate, timestamped and scored hour by hour. Live results and backtests, labelled apart.">
+<meta property="og:url" content="https://jacobscodecom.github.io/ancillary-markets/">
+<meta property="og:image" content="https://jacobscodecom.github.io/ancillary-markets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The latest live spot SE3 forecast with its likely range, the realised price and the same-as-yesterday baseline">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ancillary Services Insights">
+<meta name="twitter:description" content="Reserve and spot price forecasts for SE1 to SE4, issued before each market gate, timestamped and scored hour by hour.">
+<meta name="twitter:image" content="https://jacobscodecom.github.io/ancillary-markets/img/og.png">
+<style>
+  :root { --bg:#fafcfb; --card:#ffffff; --ink:#182b2b; --ink2:#4f5f5c; --muted:#657471; --line:#dce5e1; --blue:#008575; --blue-soft:#cfe8e2; --teal:#008575; --mono:"SFMono-Regular",Menlo,Consolas,monospace; --orange:#eb6834; --green:#1baf7a; --gold:#d9a21b; --violet:#5b4bd6; --good-bg:#d8ecd2; --good:#23632a; --warn-bg:#fbe7c2; --warn:#7a4d00; --bad-bg:#f7d3d3; --bad:#8b1e1e; }
+  :root:not([data-theme="light"]) { color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#101817; --card:#182322; --ink:#e8efed; --ink2:#b5c2be; --muted:#7f908c; --line:#26332f; --blue:#2fb59f; --blue-soft:#1f4a43; --teal:#2fb59f; --good-bg:#1f3a22; --good:#8fd39a; --warn-bg:#3d2f10; --warn:#f0c674; --bad-bg:#3d1c1c; --bad:#f0a0a0; } }
+  :root[data-theme="dark"] { --bg:#101817; --card:#182322; --ink:#e8efed; --ink2:#b5c2be; --muted:#7f908c; --line:#26332f; --blue:#2fb59f; --blue-soft:#1f4a43; --teal:#2fb59f; --good-bg:#1f3a22; --good:#8fd39a; --warn-bg:#3d2f10; --warn:#f0c674; --bad-bg:#3d1c1c; --bad:#f0a0a0; }
+  body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 16px 20px 48px; } @media (max-width: 640px) { .wrap { padding: 12px 16px 40px; } }
+  .intro, .lead, .sub, .note, .section h2.big, h1, .limits, details.how { max-width: 780px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+  .menu-btn { display: none; font: inherit; font-size: 14px; font-weight: 600; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+  nav#nav { display: flex; align-items: center; gap: 4px; margin: 0; border-bottom: none; overflow: visible; } nav#nav .trial { margin-left: 8px; }
+  .btn.small { font-size: 13px; padding: 8px 12px; }
+  @media (max-width: 720px) { .menu-btn { display: inline-block; } nav#nav { display: none; position: absolute; left: 0; right: 0; top: 56px; flex-direction: column; align-items: stretch; background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px 12px; z-index: 4; gap: 0; } nav#nav.open { display: flex; } nav#nav a { padding: 12px 6px; font-size: 16px; border-bottom: 1px solid var(--line); } nav#nav a.on { border-bottom: 1px solid var(--line); } nav#nav .trial { margin: 12px 0 0; text-align: center; border: 1px solid var(--teal); } .wrap { position: relative; } }
+  .hero-panel .panel { margin-top: 0; }
+  .hero { position: relative; isolation: isolate; padding-top: 8px; }
+  .hero::before { content: ""; position: absolute; inset: -16px -20px 0; z-index: -1; pointer-events: none; opacity: .7; background-image: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px calc(100% / 24)); -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.35) 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.35) 55%, transparent 100%); }
+  a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
+  .btn:hover { filter: brightness(.94); } .btn.ghost:hover { background: var(--blue-soft); filter: none; } .door:hover { box-shadow: 0 0 0 1px var(--line); } nav a:hover { color: var(--ink); } .ev:hover b { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  @media (prefers-reduced-motion: no-preference) { .btn, .door, nav a, .cta, .ev b { transition: background-color .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease, filter .15s ease; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+  footer a { margin-right: 12px; }
+  .split .steps { grid-template-columns: 1fr; margin-top: 0; }
+  .illus { margin: 0; } .illus img { width: 100%; height: auto; display: block; border-radius: 14px; } .illus figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .foot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; } @media (max-width: 640px) { .foot-grid { grid-template-columns: 1fr; } }
+  .door { display: flex; flex-direction: column; } .door .say { flex: 1; margin: 0; } .door .cta { margin-top: 12px; } .door .unit { font-size: 14px; color: var(--muted); font-weight: 500; }
+  .eyebrow { font-size: 14px; font-weight: 600; color: var(--teal); }
+  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px; align-items: center; margin-top: 28px; } @media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 20px; } }
+  .hero h1 { font-size: clamp(32px, 4.4vw, 50px); letter-spacing: -.02em; line-height: 1.06; font-weight: 600; margin: 0 0 14px; text-wrap: balance; } .hero h1 em { font-style: normal; }
+  .hero .intro { font-size: 17px; color: var(--ink2); line-height: 1.55; max-width: 44ch; } .hero img { width: 100%; height: auto; display: block; border-radius: 14px; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; } .btn { font: inherit; font-size: 14px; font-weight: 600; padding: 11px 16px; border-radius: 10px; border: 1px solid var(--teal); background: var(--teal); color: #fff; cursor: pointer; } .btn.ghost { background: none; color: var(--teal); }
+  .evidence { margin-top: 28px; border-top: 1px solid var(--line); } .ev-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px 20px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: start; } @media (max-width: 640px) { .ev-row { grid-template-columns: 1fr; gap: 6px; } }
+  .ev-k { font-size: 14px; font-weight: 600; color: var(--ink); padding-top: 4px; } .ev-items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 18px; } @media (max-width: 640px) { .ev-items { grid-template-columns: 1fr; } }
+  .ev { display: block; font-size: 13px; color: var(--ink2); line-height: 1.4; text-decoration: none; cursor: pointer; } .ev b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -.01em; font-variant-numeric: tabular-nums; color: var(--ink); line-height: 1.15; margin-bottom: 2px; } .ev:hover b { color: var(--teal); }
+  .panel { background: var(--card); border-radius: 14px; padding: 16px 16px 12px; margin-top: 12px; } .ptitle { font-size: 16px; font-weight: 600; line-height: 1.3; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; } .panel .sub { margin-top: 8px; }
+  .prov { display: inline-block; border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 600; } .prov.live { background: var(--good-bg); color: var(--good); } .prov.planned { background: var(--warn-bg); color: var(--warn); } .prov.off { background: var(--bad-bg); color: var(--bad); }
+  .verify { font-size: 13px; color: var(--ink2); line-height: 1.55; padding: 10px 0 12px; border-bottom: 1px solid var(--line); margin-bottom: 4px; } .verify code { font: 11px var(--mono); word-break: break-all; }
+  .stale { background: var(--warn-bg); color: var(--warn); border-radius: 10px; padding: 10px 12px; margin-top: 10px; font-size: 14px; font-weight: 500; line-height: 1.4; }
+  .section { margin-top: 44px; } .section h2.big { font-size: clamp(22px, 3vw, 30px); letter-spacing: -.02em; line-height: 1.15; margin: 10px 0 8px; text-wrap: balance; } .section .lead { font-size: 15px; color: var(--ink2); max-width: 60ch; line-height: 1.55; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; } @media (max-width: 640px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: var(--card); border-radius: 12px; padding: 14px; } .step .k { font-size: 12px; font-weight: 600; color: var(--teal); } .step .h { font-weight: 600; margin: 6px 0 4px; } .step .d { font-size: 13px; color: var(--ink2); line-height: 1.45; }
+  .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center; } @media (max-width: 640px) { .split { grid-template-columns: 1fr; } } .split img { width: 100%; height: auto; border-radius: 14px; }
+  .band { background: var(--ink); color: var(--bg); border-radius: 16px; padding: 26px 22px; margin-top: 44px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; } .band h2 { margin: 0; font-size: 22px; letter-spacing: -.02em; } .band p { margin: 6px 0 0; color: var(--line); font-size: 14px; max-width: 52ch; } .band .btn { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+  .brand { font-weight: 600; font-size: 17px; }
+  .meta { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  nav { display: flex; gap: 4px; margin: 14px 0 18px; overflow-x: auto; border-bottom: 1px solid var(--line); }
+  nav a { background: none; border: none; color: var(--muted); font: inherit; font-size: 13px; padding: 8px 10px; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; text-decoration: none; }
+  nav a.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
+  a.brand { color: inherit; text-decoration: none; } a.btn { text-decoration: none; display: inline-block; } .page[hidden] { display: none; }
+  .kicker { font-size: 14px; font-weight: 600; color: var(--teal); }
+  h1 { font-size: 20px; font-weight: 600; margin: 4px 0 0; line-height: 1.25; }
+  h2 { font-size: 16px; font-weight: 600; margin: 22px 0 8px; }
+  .sub { font-size: 14px; color: var(--ink2); margin-top: 4px; }
+  details.how { margin: 6px 0 10px; font-size: 13px; color: var(--ink2); } details.how summary { cursor: pointer; color: var(--ink2); font-size: 14px; font-weight: 600; }
+  .ranges { display: flex; gap: 6px; margin: 6px 0 4px; flex-wrap: wrap; } .ranges button { border: 1px solid var(--line); background: var(--card); color: var(--ink2); border-radius: 8px; padding: 4px 10px; font-size: 12px; } .ranges button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .row { flex-wrap: wrap; gap: 8px; } .badge { white-space: normal; }
+  @media (max-width: 640px) { h1 { font-size: 18px; } .badge { font-size: 11px; padding: 4px 8px; } table { font-size: 12px; } td, th { padding: 5px 6px; } .cards { grid-template-columns: 1fr 1fr; } }
+  .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .badge { background: var(--good-bg); color: var(--good); border-radius: 10px; padding: 6px 10px; font-size: 12px; font-weight: 500; white-space: normal; max-width: 100%; }
+  .tag { display: inline-block; border-radius: 6px; padding: 2px 6px; font-size: 11px; font-weight: 600; vertical-align: middle; margin-left: 6px; }
+  .tag.planned { background: var(--warn-bg); color: var(--warn); } .tag.off { background: var(--bad-bg); color: var(--bad); } .tag.live { background: var(--good-bg); color: var(--good); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .card { background: var(--card); border-radius: 12px; padding: 14px; }
+  .card .l { font-size: 13px; color: var(--ink2); } .card .v { font-size: 26px; font-weight: 600; margin-top: 4px; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .card .d { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .up { color: var(--good); font-weight: 600; } .down { color: var(--bad); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; margin-top: 14px; } .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .chart { margin-top: 10px; width: 100%; overflow: hidden; } .chart svg { width: 100%; height: auto; display: block; font-family: inherit; }
+  .list { background: var(--card); border-radius: 12px; padding: 4px 14px; margin-top: 14px; } .list h3 { font-size: 16px; font-weight: 600; margin: 12px 0 4px; }
+  .li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; } .li:last-child { border-bottom: none; }
+  .li .t { color: var(--muted); margin-right: 4px; } .num { font-variant-numeric: tabular-nums; }
+  .pill { border-radius: 10px; padding: 4px 9px; font-size: 13px; font-weight: 500; }
+  .note { font-size: 12px; color: var(--ink2); margin-top: 12px; line-height: 1.45; } .note b { color: var(--warn); }
+  select { font: inherit; font-size: 13px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); max-width: 100%; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 7px 8px; border-bottom: 1px solid var(--line); } td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .tablewrap { overflow-x: auto; background: var(--card); border-radius: 12px; padding: 6px 8px; margin-top: 14px; }
+  .tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12px; padding: 6px 8px; border-radius: 6px; display: none; z-index: 5; white-space: nowrap; }
+  .empty { color: var(--muted); font-size: 13px; padding: 16px 0; }
+  .doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; } @media (max-width: 640px) { .doors { grid-template-columns: 1fr; } }
+  .door { background: var(--card); border-radius: 12px; padding: 16px; text-align: left; font: inherit; color: var(--ink); }
+  .door .who { font-size: 13px; font-weight: 600; color: var(--ink2); } .door .num { font-size: 26px; font-weight: 600; margin: 6px 0 4px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; } .door .say { font-size: 13px; color: var(--ink2); line-height: 1.45; }
+  .cta { display: inline-block; margin-top: 10px; font-size: 13px; color: var(--blue); text-decoration: none; } .cta:hover { text-decoration: underline; }
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink2); line-height: 1.6; } footer a { color: var(--blue); text-decoration: none; } footer a:hover { text-decoration: underline; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; background: var(--line); } .dot.live { background: var(--green); }
+  .limits { background: var(--card); border-radius: 12px; padding: 14px 16px; margin-top: 18px; } .limits h3 { margin: 0 0 6px; font-size: 14px; } .limits li { font-size: 13px; color: var(--ink2); margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" id="brand" href="#home">Ancillary Services Insights</a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav id="nav" aria-label="Pages"><a href="#forecasts" data-p="forecasts">Forecasts</a><a href="#record" data-p="record">Track record</a><a href="#value" data-p="value">Value</a><a href="#method" data-p="method">Method</a><a class="btn small trial" id="hdr-trial" data-trial="1" href="mailto:contact@jacobscode.com?subject=Shadow%20trial%20request">Request a shadow trial</a></nav>
+  </header>
+  <main id="main">
+    <section id="home-page" class="page">
+      <div class="hero">
+        <div class="hero-text"><h1>Tomorrow's reserve and spot prices, forecast before the gate. Scored after.</h1>
+          <p class="intro">Price forecasts for FCR, mFRR capacity and day-ahead spot in SE1 to SE4, issued before each market gate and scored against the outcome hour by hour. Live figures and backtest figures are labelled apart, always.</p>
+          <div class="actions"><a class="btn" href="#record">See the track record</a><a class="btn ghost" href="#forecasts">Explore forecasts</a></div></div>
+        <div class="hero-panel" id="hero-panel"><div class="panel"><div class="ptitle">Latest live forecast</div><p class="sub">The most recent spot SE3 issue, with its likely range and the realised price as it is published.</p></div></div>
+      </div>
+      <div class="evidence">
+        <div class="ev-row"><div class="ev-k" id="ev-live-k">Live</div><div class="ev-items">
+          <a class="ev" href="#record"><b id="ev-issues">–</b><span id="ev-issues-t">issues, each timestamped before its gate and public</span></a>
+          <a class="ev" href="#record"><b id="ev-hours">–</b><span id="ev-hours-t">scored hours</span></a>
+          <a class="ev" href="#record"><b id="ev-live-skill">–</b><span id="ev-live-skill-t">lower error than same-as-yesterday on spot SE3</span></a></div></div>
+        <div class="ev-row"><div class="ev-k" id="ev-bt-k">Backtest</div><div class="ev-items">
+          <a class="ev" href="#method"><b id="ev-bt-skill">–</b><span id="ev-bt-skill-t">lower error than same-as-yesterday on spot SE3</span></a>
+          <a class="ev" href="#value"><b id="ev-hold">–</b><span id="ev-hold-t">per MW, FCR-D up, auction 1 or 2 on our forecast vs the best fixed rule</span></a></div></div>
+      </div>
+      <div id="home-dyn"></div>
+    </section>
+    <section id="app" class="page" hidden></section>
+  </main>
+  <footer id="foot"></footer>
+  <div class="tip" id="tip"></div>
+</div>
+
+<script>
+const D = {"built_at":"2026-09-10T18:06:26.256263+02:00","git":"09651e3","version":{"version":"v0.8","date":"2026-09-09T18:15:00+02:00","commit":"d9a0882","windows":{"A":["poolfcr_n_A","poolfcr_d_up_A","v07_A","nonefx_A","obsera_A","v3_A","exp3c_cm_relative","adopted4_v2","auctions_v2"],"B":["poolfcr_n_B","poolfcr_d_up_B","v07_B","nonefx_B","obsera_B","v3_B","valB_exp3c_cm_relative","valB_adopted4","valB_ref_v2b"],"C":["poolfcr_n_C","poolfcr_d_up_C","v07_C","windowC_v06","windowC_final"]}},"window":"C","window_def":{"train_end":"2026-02-01","test_end":"2026-09-01"},"windows":{"A":{"train_end":"2025-08-01","test_end":"2026-02-01"},"B":{"train_end":"2025-02-01","test_end":"2025-08-01"},"C":{"train_end":"2026-02-01","test_end":"2026-09-01"}},"mode":"backtest","proof":null,"contact":{"email":"contact@jacobscode.com","linkedin":"https://www.linkedin.com/in/jacob-ekedahl","repo":"https://github.com/JacobsCodeCom/ancillary-markets"},"not_yet":["Battery allocation across markets: as a view for splitting a battery between markets, the forecasts do not yet beat a 7-day mean. Not offered.","Load shifting in SE3 and SE4: against a 7-day mean price profile the saving is not yet positive. It is in SE1 and SE2.","FCR-D down: no spike alert (no better than persistence) and the hold call does not beat always selling in auction 2.","Auction 1 prices: the weakest error reduction of the FCR series (20-25%); the hold call rests mostly on the auction-2 view.","aFRR capacity prices are not forecast. Forecasts are hourly; day-ahead trades in 15-minute periods since 1 Oct 2025 and we forecast the hourly average."],"notes":{"metrics":"Only hours unpublished at issue time are scored. Naive = same hour on the most recent known day.","intervals":"Empirical 10th/90th percentiles of the previous 90 days' residuals per hour-of-day; first 30 days are warm-up.","spike":"Flag when forecast exceeds the trailing 90-day 90th percentile of realised prices. The section stays down while precision is below 50%.","decisions":"Asset-free: computed from published clearing prices and the forecasts issued at 00:00 the day before, delivery-day hours only, hours already published at issue time excluded. Same product and the same MW in both auctions, so no battery model is involved. 95% ranges from a day-block bootstrap."},"fx_note":"EUR/SEK 10.88, Riksbank fixings averaged over 2026-02-01 to 2026-09-01","fx_eur_sek":10.876922602739725,"issue_schedule":{"a1":"00:00","spot":"11:00","a2":"17:00"},"live":null,"series":{"power_price_SE1":{"series":"power_price_SE1","name":"Spot SE1","unit":"SEK/MWh","gate":"Issued 11:00 the day before; Nord Pool publishes 12:45","decision_hour":11,"mae_model":164.74072864259523,"mae_naive":295.317273907805,"skill":0.4421568150665457,"n_cells":134843,"known_share":0.447871626048218,"shape":{"days":210,"spearman_model":0.5879632016064589,"spearman_naive":0.3991389812516221,"top4_model":1.7428571428571429,"top4_naive":1.4714285714285715},"ci":{"days":210,"skill":0.4490902692600174,"skill_ci":[0.38818953140898105,0.5080690577520877],"spearman_gain":0.18882422035483684,"spearman_gain_ci":[0.14150675980774022,0.2408765615446058]},"intervals":{"coverage":0.7997685185185185,"days_evaluated":180,"target":0.8}},"power_price_SE2":{"series":"power_price_SE2","name":"Spot SE2","unit":"SEK/MWh","gate":"Issued 11:00 the day before; Nord Pool publishes 12:45","decision_hour":11,"mae_model":167.2003237594584,"mae_naive":302.02297988275615,"skill":0.4463986686563891,"n_cells":134843,"known_share":0.447871626048218,"shape":{"days":210,"spearman_model":0.5547348603505918,"spearman_naive":0.3758156842333351,"top4_model":1.6333333333333333,"top4_naive":1.4523809523809523},"ci":{"days":210,"skill":0.45322095953783326,"skill_ci":[0.3902338692398176,0.5106703701753698],"spearman_gain":0.17891917611725666,"spearman_gain_ci":[0.12762981109513505,0.23206023715200916]},"intervals":{"coverage":0.8002314814814815,"days_evaluated":180,"target":0.8}},"power_price_SE3":{"series":"power_price_SE3","name":"Spot SE3","unit":"SEK/MWh","gate":"Issued 11:00 the day before; Nord Pool publishes 12:45","decision_hour":11,"mae_model":201.50453932826164,"mae_naive":372.9049713000884,"skill":0.4596356851298059,"n_cells":134843,"known_share":0.447871626048218,"shape":{"days":210,"spearman_model":0.7790321271550651,"spearman_naive":0.6690427300898298,"top4_model":2.4571428571428573,"top4_naive":2.2714285714285714},"ci":{"days":210,"skill":0.46092254300393,"skill_ci":[0.4131503217733041,0.5036129982073554],"spearman_gain":0.10998939706523521,"spearman_gain_ci":[0.07749750884417554,0.14223615580383114]},"intervals":{"coverage":0.7442129629629629,"days_evaluated":180,"target":0.8}},"power_price_SE4":{"series":"power_price_SE4","name":"Spot SE4","unit":"SEK/MWh","gate":"Issued 11:00 the day before; Nord Pool publishes 12:45","decision_hour":11,"mae_model":263.94127262251374,"mae_naive":458.0768992247889,"skill":0.4238057560440487,"n_cells":134843,"known_share":0.447871626048218,"shape":{"days":210,"spearman_model":0.8178225949201392,"spearman_naive":0.7163181243684946,"top4_model":2.7,"top4_naive":2.5095238095238095},"ci":{"days":210,"skill":0.4083901718463312,"skill_ci":[0.3588341087633981,0.4527035459426274],"spearman_gain":0.10150447055164455,"spearman_gain_ci":[0.07127998509685908,0.1326613510918626]},"intervals":{"coverage":0.7039351851851852,"days_evaluated":180,"target":0.8}},"fcr_n_a1":{"series":"fcr_n_a1","name":"FCR-N auction 1","unit":"EUR/MW","gate":"Issued 00:00 the day before, gate 00:30","decision_hour":0,"mae_model":5.6370051869660465,"mae_naive":7.0736637347376465,"skill":0.20309963855313007,"n_cells":99234,"known_share":0.5936762971698113,"shape":{"days":209,"spearman_model":0.22595450952117638,"spearman_naive":0.27318438559342006,"top4_model":0.9330143540669856,"top4_naive":0.9138755980861244},"ci":{"days":210,"skill":0.22944232983147972,"skill_ci":[0.11964121736324576,0.32962157328215114],"spearman_gain":-0.048233280528258385,"spearman_gain_ci":[-0.0977730500929521,0.0054948327524106414]},"intervals":{"coverage":0.8076388888888889,"days_evaluated":180,"target":0.8}},"fcr_n_a2":{"series":"fcr_n_a2","name":"FCR-N auction 2","unit":"EUR/MW","gate":"Issued 17:00 the day before, gate 18:00","decision_hour":17,"mae_model":11.758800192531961,"mae_naive":16.708476311737112,"skill":0.29623743223840104,"n_cells":165365,"known_share":0.32289619365828093,"shape":{"days":209,"spearman_model":0.0822615346657788,"spearman_naive":0.038937094671543625,"top4_model":0.7559808612440191,"top4_naive":0.7894736842105263},"ci":{"days":210,"skill":0.2985090273772485,"skill_ci":[0.2131916921849563,0.3863600648314454],"spearman_gain":0.043324439994235193,"spearman_gain_ci":[-0.010387348630335917,0.09818622580035855]},"intervals":{"coverage":0.8106481481481481,"days_evaluated":180,"target":0.8}},"fcr_d_up_a1":{"series":"fcr_d_up_a1","name":"FCR-D up auction 1","unit":"EUR/MW","gate":"Issued 00:00 the day before, gate 00:30","decision_hour":0,"mae_model":2.922408616707848,"mae_naive":3.9087641312697516,"skill":0.2523445983018394,"n_cells":99234,"known_share":0.5936762971698113,"shape":{"days":207,"spearman_model":0.4183089763397454,"spearman_naive":0.36965704107926134,"top4_model":1.0724637681159421,"top4_naive":1.1207729468599035},"ci":{"days":210,"skill":0.30267279105968015,"skill_ci":[0.05451108286979401,0.5663147054945064],"spearman_gain":0.04664595772259857,"spearman_gain_ci":[0.005990624900297606,0.08815758716794955]},"intervals":{"coverage":0.8219907407407407,"days_evaluated":180,"target":0.8}},"fcr_d_up_a2":{"series":"fcr_d_up_a2","name":"FCR-D up auction 2","unit":"EUR/MW","gate":"Issued 17:00 the day before, gate 18:00","decision_hour":17,"mae_model":4.464409692105757,"mae_naive":7.203423467971297,"skill":0.3802377838876283,"n_cells":165365,"known_share":0.32289619365828093,"shape":{"days":210,"spearman_model":0.17749525339175445,"spearman_naive":0.18474837643074862,"top4_model":0.9333333333333333,"top4_naive":1.0047619047619047},"ci":{"days":210,"skill":0.36814723370822755,"skill_ci":[0.18204183929281983,0.5603559911105153],"spearman_gain":-0.007253123038994187,"spearman_gain_ci":[-0.061733067209791305,0.047966618887819584]},"intervals":{"coverage":0.8099537037037037,"days_evaluated":180,"target":0.8}},"fcr_d_down_a1":{"series":"fcr_d_down_a1","name":"FCR-D down auction 1","unit":"EUR/MW","gate":"Issued 00:00 the day before, gate 00:30","decision_hour":0,"mae_model":1.7479406768649022,"mae_naive":2.214054458996697,"skill":0.21052498516365092,"n_cells":99234,"known_share":0.5936762971698113,"shape":{"days":209,"spearman_model":0.18565351333751434,"spearman_naive":0.33334710237524867,"top4_model":0.9473684210526315,"top4_naive":1.167464114832536},"ci":{"days":210,"skill":0.22366905207583188,"skill_ci":[0.12229305663710095,0.3162701408357752],"spearman_gain":-0.14769358903773436,"spearman_gain_ci":[-0.1943526982941765,-0.10160944687237437]},"intervals":{"coverage":0.7789351851851852,"days_evaluated":180,"target":0.8}},"fcr_d_down_a2":{"series":"fcr_d_down_a2","name":"FCR-D down auction 2","unit":"EUR/MW","gate":"Issued 17:00 the day before, gate 18:00","decision_hour":17,"mae_model":3.611182477332971,"mae_naive":5.579296348320974,"skill":0.3527530620559858,"n_cells":165365,"known_share":0.32289619365828093,"shape":{"days":208,"spearman_model":0.09193608993723315,"spearman_naive":0.17282394679169102,"top4_model":0.7692307692307693,"top4_naive":0.8894230769230769},"ci":{"days":210,"skill":0.37283093531225453,"skill_ci":[0.18799226426700183,0.5677276417946241],"spearman_gain":-0.08088785685445783,"spearman_gain_ci":[-0.131266883392654,-0.032153363947432206]},"intervals":{"coverage":0.7680555555555556,"days_evaluated":180,"target":0.8}},"mfrr_up":{"series":"mfrr_up","name":"mFRR energy up","unit":"EUR/MWh","gate":"Issued 11:00 the day before","decision_hour":11,"mae_model":34.14042586172511,"mae_naive":46.58110951956583,"skill":0.2670757263223873,"n_cells":244224,"known_share":0.0,"shape":{"days":210,"spearman_model":0.6181176764523064,"spearman_naive":0.5310264680691085,"top4_model":1.8952380952380952,"top4_naive":1.7380952380952381},"ci":{"days":210,"skill":0.23295111722454753,"skill_ci":[0.1774689476705319,0.28720787124890573],"spearman_gain":0.08709120838319799,"spearman_gain_ci":[0.05307694184073392,0.12309901284536426]},"intervals":{"coverage":0.7604166666666666,"days_evaluated":180,"target":0.8}},"mfrr_down":{"series":"mfrr_down","name":"mFRR energy down","unit":"EUR/MWh","gate":"Issued 11:00 the day before","decision_hour":11,"mae_model":26.91496806205621,"mae_naive":36.969019738780524,"skill":0.27195883871861515,"n_cells":244224,"known_share":0.0,"shape":{"days":210,"spearman_model":0.46201375532124994,"spearman_naive":0.34831735976094086,"top4_model":1.819047619047619,"top4_naive":1.7333333333333334},"ci":{"days":210,"skill":0.2571547708460544,"skill_ci":[0.2096141824369977,0.30613391939886075],"spearman_gain":0.1136963955603091,"spearman_gain_ci":[0.07218338294339885,0.15559066709385058]},"intervals":{"coverage":0.7787037037037037,"days_evaluated":180,"target":0.8}},"mfrr_cm_up":{"series":"mfrr_cm_up","name":"mFRR capacity up","unit":"EUR/MW","gate":"Issued 00:00 the day before, gate 07:30","decision_hour":0,"mae_model":7.035498414436342,"mae_naive":9.295536220860308,"skill":0.24313151524837995,"n_cells":114495,"known_share":0.5311885809748428,"shape":{"days":210,"spearman_model":0.21164970542766057,"spearman_naive":0.31352992221501264,"top4_model":1.0571428571428572,"top4_naive":1.2190476190476192},"ci":{"days":210,"skill":0.26265497166275786,"skill_ci":[0.1446109943560923,0.3657999176780953],"spearman_gain":-0.10188021678735211,"spearman_gain_ci":[-0.15309608912015996,-0.051995611868872776]},"intervals":{"coverage":0.8178240740740741,"days_evaluated":180,"target":0.8}},"mfrr_cm_down":{"series":"mfrr_cm_down","name":"mFRR capacity down","unit":"EUR/MW","gate":"Issued 00:00 the day before, gate 07:30","decision_hour":0,"mae_model":2.440721095755584,"mae_naive":3.082688236980622,"skill":0.20824912929042116,"n_cells":114495,"known_share":0.5311885809748428,"shape":{"days":206,"spearman_model":0.20567169610446498,"spearman_naive":0.29785813821109564,"top4_model":0.9271844660194175,"top4_naive":1.0825242718446602},"ci":{"days":210,"skill":0.19884760908918087,"skill_ci":[0.121973111187794,0.2776891495132265],"spearman_gain":-0.09004907167115386,"spearman_gain_ci":[-0.1420014209360083,-0.036210913821030005]},"intervals":{"coverage":0.7094907407407407,"days_evaluated":180,"target":0.8}}},"decisions":{"hold":[{"product":"fcr_n","decision_days":212,"scored_hours":5088,"eur_per_mw":{"model":114651.9198217392,"naive":104878.85985360295,"mean7":106303.07982420921,"mean30":109021.03979668766,"always_a1":111303.74980258942,"always_a2":91883.4599305708,"hindsight":137776.19977283478},"regret_eur_per_mw":{"model":23124.27995109558,"naive":32897.33991923183,"mean7":31473.119948625565,"mean30":28755.159976147115,"always_a1":26472.44997024536,"always_a2":45892.73984226398},"capture_of_hindsight_gap_over_best_fixed":0.12647752750172625,"delta_vs_always_a1_ci":[-2612.666000688076,11310.232546186444],"delta_vs_naive_ci":[4654.545678929984,17014.82605418413],"delta_vs_best_fixed_ci":[-2612.666000688076,11310.232546186444],"delta_vs_mean7_ci":[3358.117313873768,15603.828043848254],"delta_vs_mean30_ci":[823.1032588073984,12934.805533454379],"hold_share_model":0.11517295597484277,"hold_share_hindsight":0.23938679245283018},{"product":"fcr_d_up","decision_days":212,"scored_hours":5088,"eur_per_mw":{"model":32290.99999023974,"naive":29248.48998078704,"mean7":27923.29999266565,"mean30":30651.519996114075,"always_a1":26239.099989771843,"always_a2":24971.729997836053,"hindsight":42478.630011320114},"regret_eur_per_mw":{"model":10187.630021080375,"naive":13230.140030533075,"mean7":14555.330018654466,"mean30":11827.110015206039,"always_a1":16239.530021548271,"always_a2":17506.90001348406},"capture_of_hindsight_gap_over_best_fixed":0.37266472566863795,"delta_vs_always_a1_ci":[684.8814958984033,13778.706996408477],"delta_vs_naive_ci":[952.2167510004714,5827.367757675421],"delta_vs_best_fixed_ci":[684.8814958984033,13778.706996408477],"delta_vs_mean7_ci":[800.3042343024165,9237.446725134363],"delta_vs_mean30_ci":[-1189.8637547085061,4578.716991628334],"hold_share_model":0.2073506289308176,"hold_share_hindsight":0.23545597484276728},{"product":"fcr_d_down","decision_days":212,"scored_hours":5088,"eur_per_mw":{"model":18135.500017099082,"naive":16694.660000965,"mean7":19914.760002322495,"mean30":18463.960004508495,"always_a1":15583.40000140667,"always_a2":19479.91000057012,"hindsight":28158.76001882553},"regret_eur_per_mw":{"model":10023.260001726449,"naive":11464.100017860532,"mean7":8244.000016503036,"mean30":9694.800014317036,"always_a1":12575.360017418861,"always_a2":8678.850018255413},"capture_of_hindsight_gap_over_best_fixed":-0.15490646579249032,"delta_vs_always_a1_ci":[-1864.8669874325394,10181.878003691136],"delta_vs_naive_ci":[-2824.060995289497,8073.051506870971],"delta_vs_best_fixed_ci":[-5762.861992716416,2370.8407786114108],"delta_vs_mean7_ci":[-5466.376732915453,763.9337614605187],"delta_vs_mean30_ci":[-4537.116743028164,3609.0912505228066],"hold_share_model":0.263561320754717,"hold_share_hindsight":0.26257861635220126}]},"shifter_home":{"SE1":{"profile":"4 h/day, any hours","months":["2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"hours_per_day":4,"saving_per_year_sek":67741.92582506132,"ci_per_year_sek":[51610.71327935013,85594.59025972108],"months_positive":19,"n_months":20,"days":571},"SE2":{"profile":"4 h/day, any hours","months":["2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"hours_per_day":4,"saving_per_year_sek":80971.04383805054,"ci_per_year_sek":[60606.84728648053,101732.61737634092],"months_positive":14,"n_months":14,"days":392},"SE3":{"profile":"4 h/day, any hours","months":["2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"hours_per_day":4,"saving_per_year_sek":35393.98256760381,"ci_per_year_sek":[17600.386468260895,55884.11855715723],"months_positive":14,"n_months":20,"days":571},"SE4":{"profile":"4 h/day, any hours","months":["2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"hours_per_day":4,"saving_per_year_sek":78237.57544538382,"ci_per_year_sek":[56300.16254163645,101548.65021500376],"months_positive":13,"n_months":14,"days":392}},"latest_issue":{}};
+const M = { fcr_n_a1: {name: "FCR-N A1", color: "var(--blue)"}, fcr_d_up_a1: {name: "FCR-D up A1", color: "var(--green)"}, fcr_d_down_a1: {name: "FCR-D down A1", color: "var(--orange)"}, mfrr_cm_up: {name: "mFRR CM up", color: "var(--gold)"}, mfrr_cm_down: {name: "mFRR CM down", color: "#a08cff"}, spot: {name: "Spot arbitrage", color: "var(--violet)"} };
+const fmt = (x, d = 0) => x == null || isNaN(x) ? "–" : Number(x).toLocaleString("en-GB", { maximumFractionDigits: d, minimumFractionDigits: d }).replace(/,/g, " ");
+const pct = (x, d = 0) => x == null || isNaN(x) ? "–" : (100 * x).toFixed(d) + "%";
+const eur = (x, d = 0) => "€" + fmt(x, d);
+const H = (s) => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dayName = (s) => new Date(s + "T00:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }).replace("Sept", "Sep");
+const cur = D.version;
+const SNAME = { power_price_SE1: "Spot SE1", power_price_SE2: "Spot SE2", power_price_SE3: "Spot SE3", power_price_SE4: "Spot SE4", fcr_n: "FCR-N (blend)", fcr_d_up: "FCR-D up (blend)", fcr_d_down: "FCR-D down (blend)", fcr_n_a1: "FCR-N auction 1", fcr_n_a2: "FCR-N auction 2", fcr_d_up_a1: "FCR-D up auction 1", fcr_d_up_a2: "FCR-D up auction 2", fcr_d_down_a1: "FCR-D down auction 1", fcr_d_down_a2: "FCR-D down auction 2", mfrr_up: "mFRR energy up", mfrr_down: "mFRR energy down", mfrr_cm_up: "mFRR capacity up", mfrr_cm_down: "mFRR capacity down" };
+const sname = s => SNAME[s] || (D.series[s] ? D.series[s].name : s);
+const PAGES = [["home", "Home"], ["forecasts", "Forecasts"], ["record", "Track record"], ["value", "Value"], ["method", "Method"]];
+const PAGE_ALIAS = { live: "record", forecast: "forecasts", tomorrow: "forecasts", earnings: "value", plan: "forecasts", score: "record", versions: "method" };
+const pageFromHash = () => { const h = location.hash.replace(/^#\/?/, "").split("/")[0]; const k = PAGE_ALIAS[h] || h; return PAGES.some(([p]) => p === k) ? k : "home"; };
+let page = pageFromHash();
+const IMG = { park: "img/battery-park.webp", parkW: "1200", parkH: "675" };
+// per-page data: data/<page>.json is fetched once and merged into D; hourly rows come from data/hours/<series>.json on demand
+const LOADED = {}; const HOURS = {};
+async function need(name) { if (!LOADED[name]) { const r = await fetch(`data/${name}.json`, { cache: "no-cache" }); if (!r.ok) throw new Error(`${name}: ${r.status}`); LOADED[name] = await r.json(); } return LOADED[name]; }
+
+// ---------- SVG helpers ----------
+function scale(vals, pad = 0.06) { let lo = Math.min(...vals.filter(v => v != null && !isNaN(v))), hi = Math.max(...vals.filter(v => v != null && !isNaN(v))); if (lo === hi) { lo -= 1; hi += 1; } const r = hi - lo; lo = Math.min(0, lo - r * pad); hi = hi + r * pad; return [lo, hi]; }
+function ticks(lo, hi, n = 4) { const step = niceStep((hi - lo) / n); const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(6)); return out; }
+function niceStep(raw) { const p = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / p; return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p; }
+const MOBILE = () => window.innerWidth <= 640; const CW = () => MOBILE() ? 380 : 700;   // viewBox width: text is sized in viewBox units, so a phone gets a narrower box
+function lineChart(opts) {
+  const W = CW(), Hh = Math.max(MOBILE() ? 210 : 0, opts.height || 300), L = 46, R = 24, T = 18, B = 34; const n = opts.n; const all = []; opts.series.forEach(s => all.push(...s.values)); if (opts.band) { all.push(...opts.band.lo, ...opts.band.hi); }
+  const [lo, hi] = opts.range || scale(all); const x = i => L + (W - L - R) * (n === 1 ? 0.5 : i / (n - 1)); const y = v => T + (Hh - T - B) * (1 - (v - lo) / (hi - lo));
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${H(opts.label || "chart")}" data-n="${n}" data-l="${L}" data-r="${R}" data-w="${W}">`;
+  ticks(lo, hi).forEach(t => { s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${opts.yFmt ? opts.yFmt(t) : fmt(t)}</text>`; });
+  (opts.shade || []).forEach(([a, b, color]) => { s += `<rect x="${x(a) - (W - L - R) / (n - 1) / 2}" y="${T}" width="${(x(b) - x(a)) + (W - L - R) / (n - 1)}" height="${Hh - T - B}" fill="${color}" opacity="0.35"/>`; });
+  (opts.vlines || []).forEach(i => { s += `<line x1="${x(i)}" x2="${x(i)}" y1="${T}" y2="${Hh - B}" stroke="var(--muted)" stroke-dasharray="4 4"/>`; });
+  if (opts.band) { const pts = opts.band.lo.map((v, i) => v == null ? null : `${x(i)},${y(v)}`); const pts2 = opts.band.hi.map((v, i) => v == null ? null : `${x(i)},${y(v)}`); const segs = []; let a = [], b = []; for (let i = 0; i <= n; i++) { if (i < n && pts[i]) { a.push(pts[i]); b.push(pts2[i]); } else if (a.length) { segs.push(a.concat(b.reverse()).join(" ")); a = []; b = []; } } segs.forEach(p => s += `<polygon points="${p}" fill="${opts.band.color || "var(--blue)"}" opacity="0.16"/>`); }
+  if (opts.fillBetween) { const [i1, i2, color] = opts.fillBetween; const a = opts.series[i1].values, b = opts.series[i2].values; s += `<polygon points="${a.map((v, i) => `${x(i)},${y(v)}`).join(" ")} ${b.map((v, i) => `${x(i)},${y(v)}`).reverse().join(" ")}" fill="${color}" opacity="0.18"/>`; }
+  opts.series.forEach(se => { let d = "", pen = false; se.values.forEach((v, i) => { if (v == null || isNaN(v)) { pen = false; return; } d += (pen ? "L" : "M") + x(i) + "," + y(v) + " "; pen = true; }); s += `<path d="${d}" fill="none" stroke="${se.color}" stroke-width="${se.width || 2}" ${se.dash ? `stroke-dasharray="${se.dash}"` : ""} stroke-linejoin="round" stroke-linecap="round"/>`; });
+  (opts.xLabels || []).forEach(([i, t], k, arr) => { const anchor = arr.length > 1 && k === arr.length - 1 && i >= n - 2 ? "end" : arr.length > 1 && k === 0 && i <= 1 ? "start" : "middle"; s += `<text x="${x(i)}" y="${Hh - 10}" text-anchor="${anchor}" font-size="11" fill="var(--muted)">${H(t)}</text>`; });
+  (opts.notes || []).forEach(([i, v, t]) => { s += `<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="var(--ink)"/><text x="${x(i) + 8}" y="${y(v) - 6}" font-size="11" fill="var(--ink)">${H(t)}</text>`; });
+  s += `<rect class="hit" x="${L}" y="${T}" width="${W - L - R}" height="${Hh - T - B}" fill="transparent"/><line class="cross" x1="0" x2="0" y1="${T}" y2="${Hh - B}" stroke="var(--ink)" stroke-width="1" opacity="0"/></svg>`;
+  return { svg: s, x, y };
+}
+function attachHover(el, n, tipFn) { const svg = el.querySelector("svg"), cross = svg.querySelector(".cross"), tip = document.getElementById("tip"); const L = +svg.dataset.l, R = +svg.dataset.r, W = +svg.dataset.w;
+  svg.addEventListener("mousemove", ev => { const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) / r.width * W; const i = Math.max(0, Math.min(n - 1, Math.round((px - L) / (W - L - R) * (n - 1)))); const xx = L + (W - L - R) * (n === 1 ? 0.5 : i / (n - 1)); cross.setAttribute("x1", xx); cross.setAttribute("x2", xx); cross.setAttribute("opacity", "0.5"); tip.style.display = "block"; tip.innerHTML = tipFn(i); tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 12) + "px"; tip.style.top = (ev.clientY + 12) + "px"; });
+  svg.addEventListener("mouseleave", () => { cross.setAttribute("opacity", "0"); tip.style.display = "none"; }); }
+function barChart(groups, opts) { // groups: [{label, bars:[{v,color,title}]}]
+  const W = CW(), Hh = Math.max(MOBILE() ? 160 : 0, opts.height || 200), L = 46, R = 24, T = 14, B = 30; const n = groups.length; const all = groups.flatMap(g => g.bars.map(b => b.v)); const [lo, hi] = opts.range || scale(all); const gw = (W - L - R) / n; const y = v => T + (Hh - T - B) * (1 - (v - lo) / (hi - lo));
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${H(opts.label || "bars")}">`; ticks(lo, hi, 3).forEach(t => s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${opts.yFmt ? opts.yFmt(t) : fmt(t)}</text>`);
+  groups.forEach((g, gi) => { const k = g.bars.length; const bw = Math.max(2, (gw * 0.8 - 2 * (k - 1)) / k); g.bars.forEach((b, bi) => { const xx = L + gi * gw + gw * 0.1 + bi * (bw + 2); const y0 = y(Math.max(0, lo)), y1 = y(b.v); s += `<rect x="${xx}" y="${Math.min(y0, y1)}" width="${bw}" height="${Math.abs(y0 - y1)}" fill="${b.color}" rx="2"><title>${H(b.title || "")}</title></rect>`; }); if (g.label && (n <= 14 || gi % Math.ceil(n / 12) === 0)) s += `<text x="${L + gi * gw + gw / 2}" y="${Hh - 10}" text-anchor="middle" font-size="11" fill="var(--muted)">${H(g.label)}</text>`; });
+  return s + "</svg>";
+}
+const legend = items => `<div class="legend">${items.map(([c, t, dash]) => `<span><i class="sw" style="background:${c};${dash ? "height:2px;border-top:2px dashed " + c + ";background:none" : ""}"></i>${t}</span>`).join("")}</div>`;
+const unitOf = s => D.series[s] ? D.series[s].unit : "";
+
+// ---------- shared: collapsed sections remember whether they were opened; plain-language window labels ----------
+const OPEN = window.__open || (window.__open = {});
+const det = (k, summary, body) => `<details class="how" data-k="${k}" ${OPEN[k] ? "open" : ""}><summary>${summary}</summary>${body}</details>`;
+const mon = s => new Date(String(s).slice(0, 10) + "T00:00:00").toLocaleDateString("en-GB", { month: "short", year: "numeric" }).replace("Sept", "Sep");
+const monShort = s => new Date(String(s).slice(0, 10) + "T00:00:00").toLocaleDateString("en-GB", { month: "short" }).replace("Sept", "Sep");
+const winLabel = w => { const W = D.windows && D.windows[w]; if (!W) return ""; const a = new Date(W.train_end.slice(0, 10) + "T00:00:00"), b = new Date(W.test_end.slice(0, 10) + "T00:00:00"); return (a.getFullYear() === b.getFullYear() ? monShort(W.train_end) : mon(W.train_end)) + " to " + mon(W.test_end); };
+const dayHour = (date, h) => new Date(date + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" }).replace("Sept", "Sep") + " " + String(h).padStart(2, "0") + ":00";
+const CONTACT = D.contact || {}; const mailto = (subject, body) => `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const limitsBox = () => D.not_yet && D.not_yet.length ? `<div class="limits"><h3>What this does not do yet</h3><ul style="margin:0;padding-left:18px">${D.not_yet.map(x => `<li>${H(x)}</li>`).join("")}</ul></div>` : "";
+const go = (k) => { if (location.hash.replace(/^#\/?/, "") === k) route(); else location.hash = k; };
+function doorsHtml() {
+  const spot = D.series.power_price_SE3;
+  const SH = D.shifter_home || {}; const SR3 = SH.SE3 || SH[Object.keys(SH)[0]]; const shp = SR3;
+  const hdUp = ((D.decisions || {}).hold || []).find(r => r.product === "fcr_d_up" && !r.status); const hdGain = hdUp ? hdUp.eur_per_mw.model - Math.max(hdUp.eur_per_mw.always_a1, hdUp.eur_per_mw.always_a2) : null;
+  const period = shp && SR3.months && SR3.months.length ? `${mon(SR3.months[0] + "-01")} to ${mon(SR3.months[SR3.months.length - 1] + "-01")}` : "";
+  const card = (who, num, say, href, link) => `<article class="door"><div class="who">${who}</div><div class="num">${num}</div><p class="say">${say}</p><a class="cta" href="${href}">${link} →</a></article>`;
+  return `<div class="doors">
+    ${card("For sites that can move consumption", shp ? `${fmt(shp.saving_per_year_sek / 1000, 0)}k <span class="unit">SEK per year</span>` : "–", `Saved per 4 MWh a day in SE3 by placing the load on our 11:00 forecast instead of yesterday's prices, ${H(period)}${shp ? `, ${shp.months_positive} of ${shp.n_months} months positive` : ""}.`, "#value", "Pick your area and size")}
+    ${card("For reserve providers bidding FCR", hdGain == null ? "–" : `${sgnk(hdGain)} <span class="unit">per MW</span>`, `FCR-D up, sell in auction 1 or hold for auction 2 on our forecast, against the best fixed rule, ${H(winLabel(D.window))}${hdUp ? `, 95% range ${ciTxt(hdUp.delta_vs_best_fixed_ci, sgnk)}` : ""}.`, "#forecasts", "Tonight's call and the 17:00 spike alert")}
+    ${card("For traders and portfolio managers", `${pct(spot.skill)} <span class="unit">lower error</span>`, `Spot SE3 against same-as-yesterday, with a 10–90% range on every hour, backtest ${H(winLabel(D.window))}${spot.ci ? `, 95% range ${ciTxt(spot.ci.skill_ci, v => pct(v))}` : ""}.`, "#method", "Month by month, version by version")}
+  </div>`;
+}
+const lower = x => x == null || isNaN(x) ? "–" : x >= 0 ? `${pct(x)} <span style="font-size:14px;color:var(--muted)">lower error</span>` : `${pct(-x)} <span style="font-size:14px;color:var(--muted)">higher error</span>`;
+const sgnk = v => (v > 0 ? "+" : v < 0 ? "−" : "") + eur(Math.abs(v) / 1000, 1) + "k";
+const ciTxt = (ci, f) => ci ? `[${f(ci[0])}, ${f(ci[1])}]` : "no interval yet";
+
+// ---------- shared: the latest live issue as a 24-hour panel, with its display state ----------
+// States: scheduled (no issue yet: next expected time, no series drawn), issued (forecast, outcomes pending), partly scored
+// (realised line stops at the last published hour), scored, stale (issue older than STALE_H: kept, with its date up front),
+// unavailable (series not forecast), historical (no live store: the backtest replay, labelled as such).
+const STALE_H = 30;
+const BUILT_OFF = (String(D.built_at || "").match(/[+-]\d\d:\d\d$/) || ["+01:00"])[0];
+const issueFor = key => /^power_price|^mfrr_(up|down)$/.test(key) ? "spot" : /_a2$/.test(key) ? "a2" : "a1";
+const tzName = d => { try { const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", timeZoneName: "short" }).formatToParts(d).find(x => x.type === "timeZoneName"); const s = p ? p.value : ""; return /^GMT\+2/.test(s) ? "CEST" : /^GMT\+1/.test(s) ? "CET" : s; } catch (e) { return ""; } };
+const localDate = d => new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", year: "numeric", month: "2-digit", day: "2-digit" }).format(d).split("/").reverse().join("-");
+function nextIssue(issue) { const hm = (D.issue_schedule || {})[issue]; if (!hm) return null; const now = new Date(); for (let k = 0; k < 3; k++) { const t = new Date(`${localDate(new Date(now.getTime() + k * 864e5))}T${hm}:00${BUILT_OFF}`); if (t > now) return t; } return null; }
+const whenTxt = t => t ? `${dayName(localDate(t))} ${new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", hour: "2-digit", minute: "2-digit" }).format(t)} ${tzName(t)}` : "";
+const csvLink = LI => { const rel = new Date(LI.issue_date + "T00:00:00"); rel.setDate(rel.getDate() + 2); const released = localDate(new Date()) >= localDate(rel); const raw = `https://raw.githubusercontent.com/JacobsCodeCom/ancillary-markets/main`; const repo = CONTACT.repo || "https://github.com/JacobsCodeCom/ancillary-markets";
+  return released ? `<a href="${raw}/forecasts/${H(LI.issue_date)}/${H(LI.issue)}.csv" target="_blank" rel="noopener">Download CSV</a> (forecasts/${H(LI.issue_date)}/${H(LI.issue)}.csv, all series of this issue) or <a href="${repo}/tree/main/proofs/${H(LI.issue_date)}" target="_blank" rel="noopener">the hash and timestamp receipt</a>.` : `CSV: forecasts/${H(LI.issue_date)}/${H(LI.issue)}.csv is released ${H(dayName(localDate(rel)))}, once the delivery day has cleared; until then <a href="${repo}/tree/main/proofs/${H(LI.issue_date)}" target="_blank" rel="noopener">its hash and timestamp receipt</a> are public.`; };
+const sinceTxt = L => L && L.first_issue_date ? dayName(L.first_issue_date).replace(/^\w+ /, "") + " " + L.first_issue_date.slice(0, 4) : "";
+const issueState = LI => LI.hours_realised >= 24 ? "scored" : LI.hours_realised > 0 ? "partly" : "issued";
+const isStale = LI => (Date.now() - new Date(LI.issued_at).getTime()) / 36e5 > STALE_H;
+function forecastPanel(key, o = {}) {
+  const S = D.series[key]; const id = "fp-" + key; const none = { html: "", wire() {} };
+  if (D.mode !== "live" || !D.latest_issue) {   // historical: the backtest replay, never presented as an issue
+    if (!S || !S.tomorrow) return { html: `<div class="panel"><div class="ptitle"><span class="prov off">Unavailable</span> ${H(sname(key))}</div><p class="sub">No forecast for this series in this build.</p></div>`, wire() {} };
+    const tm = S.tomorrow, lo = tm.p10 || Array(24).fill(null), hi = tm.p90 || Array(24).fill(null);
+    const ch = lineChart({ n: 24, height: o.height || 240, label: `backtest replay, ${sname(key)}`, yFmt: v => fmt(v, 0), series: [{ values: tm.naive, color: "var(--orange)", width: 1.5, dash: "3 3" }, { values: tm.forecast, color: "var(--teal)", width: 2.5 }, { values: tm.actual, color: "var(--ink)", width: 2 }], band: { lo, hi, color: "var(--teal)" }, xLabels: [[0, "00:00"], [6, "06:00"], [12, "12:00"], [18, "18:00"], [23, "23:00"]] });
+    return { html: `<div class="panel"><div class="ptitle"><span class="prov planned">Backtest</span> Historical replay · ${H(dayName(tm.date))} · ${H(winLabel(D.window))}</div><p class="sub">A day from the backtest window, replayed with the forecast the model would have issued at ${String(S.decision_hour).padStart(2, "0")}:00 the day before. Not a live issue.</p>
+      ${legend([["var(--teal)", "Forecast"], ["var(--blue-soft)", "Likely range (10–90%)"], ["var(--ink)", "Realised"], ["var(--orange)", "Same as yesterday", true]])}<div class="chart" id="${id}">${ch.svg}</div><p class="sub">${H(S.unit)}.</p></div>`,
+      wire() { const el = document.getElementById(id); if (el) attachHover(el, 24, i => `<b>${H(dayHour(tm.date, i))}</b><br>forecast ${fmt(tm.forecast[i], 1)} · realised ${fmt(tm.actual[i], 1)} · yesterday ${fmt(tm.naive[i], 1)}${lo[i] != null ? `<br>range ${fmt(lo[i], 1)} – ${fmt(hi[i], 1)}` : ""}`); } };
+  }
+  const LI = D.latest_issue[key];
+  if (!LI) { const nx = nextIssue(issueFor(key)); return { html: `<div class="panel"><div class="ptitle"><span class="prov planned">Scheduled</span> ${H(sname(key))}</div><p class="sub">No live issue for this series yet.${nx ? ` The next issue is scheduled for ${H(whenTxt(nx))}.` : ""}</p></div>`, wire() {} }; }
+  const st = issueState(LI), stale = isStale(LI), unit = LI.unit; const lo = LI.p10 || Array(24).fill(null), hi = LI.p90 || Array(24).fill(null);
+  const lastReal = LI.realised.reduce((a, v, i) => v === null ? a : i, -1);
+  const ch = lineChart({ n: 24, height: o.height || 240, label: `live forecast, ${sname(key)}, ${LI.target_date}`, yFmt: v => fmt(v, 0), series: [{ values: LI.naive, color: "var(--orange)", width: 1.5, dash: "3 3" }, { values: LI.forecast, color: "var(--teal)", width: 2.5 }, { values: LI.realised, color: "var(--ink)", width: 2 }], band: { lo, hi, color: "var(--teal)" },
+    shade: lastReal < 23 ? [[lastReal + 1, 23, "var(--blue-soft)"]] : [], xLabels: [[0, "00:00"], [6, "06:00"], [12, "12:00"], [18, "18:00"], [23, "23:00"]] });
+  const issuedLbl = `${LI.issued_at.slice(11, 16)} ${LI.tz}`; const nx = nextIssue(LI.issue);
+  const status = st === "issued" ? `Awaiting outcomes: none of the 24 hours is published yet.` : st === "partly" ? `${LI.hours_realised} of 24 hours published. Error so far ${fmt(LI.mae_model, 0)} ${H(unit)}, same-as-yesterday ${fmt(LI.mae_naive, 0)}.` : `All 24 hours published. Error ${fmt(LI.mae_model, 0)} ${H(unit)}, same-as-yesterday ${fmt(LI.mae_naive, 0)}: ${LI.mae_naive ? (LI.mae_model <= LI.mae_naive ? pct(1 - LI.mae_model / LI.mae_naive) + " lower" : pct(LI.mae_model / LI.mae_naive - 1) + " higher") : "flat day"}.`;
+  const iss = ((D.live || {}).issues || []).find(x => x.date === LI.issue_date && x.issue === LI.issue); const fc = iss && iss.forecast_commit ? iss.forecast_commit.split(" ")[0] : "";
+  const staleBox = stale ? `<div class="stale">Last issue ${H(dayName(LI.issue_date))} ${H(issuedLbl)}. No newer forecast has been issued for this series${nx ? `; the next is scheduled for ${H(whenTxt(nx))}` : ""}.</div>` : "";
+  return { html: `<div class="panel"><div class="ptitle">Live forecast · target ${H(dayName(LI.target_date))} · issued ${H(issuedLbl)}</div>${staleBox}
+      ${legend([["var(--teal)", "Forecast"], ["var(--blue-soft)", "Likely range (10–90%)"], ["var(--ink)", "Realised"], ["var(--orange)", "Same as yesterday", true], ...(lastReal < 23 ? [["var(--blue-soft)", "Not yet published"]] : [])])}
+      <div class="chart" id="${id}">${ch.svg}</div>
+      <p class="sub">${status} ${H(unit)}, hourly.</p>
+      <p class="sub">Issue ${H(LI.issue)} of ${H(dayName(LI.issue_date))} at ${H(issuedLbl)}${LI.gate ? `, before the ${H(LI.gate)} gate` : ""}; model ${H(LI.version)}${fc ? `, forecast commit <a href="${H(CONTACT.repo || "#")}/commit/${H(fc)}" target="_blank" rel="noopener">${H(fc)}</a>` : ""}. The likely range is the forecast distribution; ${page === "forecasts" ? `<a href="#coverage" data-scroll="coverage">observed coverage</a> is shown below` : `observed coverage is on the <a href="#forecasts">forecasts page</a>`}.</p>
+      <p class="sub">${csvLink(LI)}</p></div>`,
+    wire() { const el = document.getElementById(id); if (el) attachHover(el, 24, i => `<b>${H(dayHour(LI.target_date, i))}</b><br>forecast ${fmt(LI.forecast[i], 1)} · realised ${LI.realised[i] == null ? "pending" : fmt(LI.realised[i], 1)} · yesterday ${LI.naive[i] == null ? "–" : fmt(LI.naive[i], 1)}${lo[i] != null ? `<br>range ${fmt(lo[i], 1)} – ${fmt(hi[i], 1)}` : ""}`); } };
+}
+
+// ---------- Page: tomorrow ----------
+function renderForecast(root) {
+  let sel = "power_price_SE3"; try { sel = localStorage.getItem("ss.series") || sel; } catch (e) {} if (!D.series[sel]) sel = Object.keys(D.series)[0];
+  const S = D.series[sel]; const yd = S.yesterday, tm = S.tomorrow;
+  const FP = forecastPanel(sel, { height: 280 });
+  const opts = Object.keys(D.series).map(k => `<option value="${k}" ${k === sel ? "selected" : ""}>${H(sname(k))}</option>`).join("");
+  // backtest replay: the last two days of the window, labelled as a replay and never as an issue
+  let replay = "", wireReplay = () => {};
+  if (yd && tm && D.mode === "live") {
+    const n = 48; const vals = yd.forecast.concat(tm.forecast), act = yd.actual.concat(tm.actual), nv = yd.naive.concat(tm.naive);
+    const lo = (yd.p10 || Array(24).fill(null)).concat(tm.p10 || Array(24).fill(null)), hi = (yd.p90 || Array(24).fill(null)).concat(tm.p90 || Array(24).fill(null));
+    const spikeOn = S.spike && S.spike.forecast.precision >= S.spike.bar_precision; const shade = []; if (spikeOn && tm.threshold != null) { let a = null; tm.forecast.forEach((v, i) => { const f = v > tm.threshold; if (f && a === null) a = i; if ((!f || i === 23) && a !== null) { shade.push([24 + a, 24 + (f ? i : i - 1), "var(--orange)"]); a = null; } }); }
+    const ch = lineChart({ n, height: 260, label: "backtest replay, forecast vs realised", yFmt: v => fmt(v, 0), series: [{ values: nv, color: "var(--orange)", width: 1.5, dash: "3 3" }, { values: vals, color: "var(--teal)", width: 2.5 }, { values: act, color: "var(--ink)", width: 2 }], band: { lo, hi, color: "var(--teal)" }, vlines: [23.5], shade,
+      xLabels: [[0, dayHour(yd.date, 0)], [12, dayHour(yd.date, 12)], [24, dayHour(tm.date, 0)], [36, dayHour(tm.date, 12)], [47, dayHour(tm.date, 23)]] });
+    const err = (a, b) => a == null ? `<span style="color:var(--muted)">pending</span>` : `<span class="${a < b ? "up" : "down"}">${fmt(a, 1)}</span> <span style="font-size:14px;color:var(--muted)">vs ${fmt(b, 1)}</span>`;
+    replay = `<div class="panel" style="margin-top:28px"><div class="ptitle"><span class="prov planned">Backtest</span> Historical replay · ${H(dayName(yd.date))} and ${H(dayName(tm.date))} · ${H(winLabel(D.window))}</div>
+      <p class="sub">The last two days of the backtest window, replayed with the forecast the model would have issued at ${String(S.decision_hour).padStart(2, "0")}:00 the day before. Not a live issue.</p>
+      ${legend([["var(--teal)", "Forecast"], ["var(--blue-soft)", "Likely range (10–90%)"], ["var(--ink)", "Realised"], ["var(--orange)", "Same as yesterday", true], ...(spikeOn ? [["#f3cdb9", `Spike flag (>${fmt(tm.threshold, 1)})`]] : [])])}
+      <div class="chart" id="fc-chart">${ch.svg}</div>
+      <div class="cards">
+        <div class="card"><div class="l">${H(dayName(tm.date))}, error, ours vs same-as-yesterday</div><div class="v">${err(tm.mae_model, tm.mae_naive)}</div><div class="d">${H(S.unit)}. Whole window ${winLabel(D.window)}, ${fmt(S.n_cells)} scored hours: ${fmt(S.mae_model, 0)} vs ${fmt(S.mae_naive, 0)}${S.ci ? `, ${pct(S.ci.skill)} lower, 95% range ${ciTxt(S.ci.skill_ci, v => pct(v))}` : ""}</div></div>
+        <div class="card" id="coverage"><div class="l">Hours inside the likely range</div><div class="v">${pct(S.intervals && S.intervals.coverage)}</div><div class="d">target 80%, ${S.intervals ? S.intervals.days_evaluated : 0} backtest days, ${winLabel(D.window)}</div></div>
+      </div></div>`;
+    wireReplay = () => attachHover(root.querySelector("#fc-chart"), n, i => { const d = i < 24 ? yd : tm, h = i % 24; return `<b>${H(dayHour(d.date, h))}</b><br>forecast ${fmt(vals[i], 1)} · realised ${act[i] == null ? "pending" : fmt(act[i], 1)} · yesterday ${fmt(nv[i], 1)}${lo[i] != null ? `<br>range ${fmt(lo[i], 1)} – ${fmt(hi[i], 1)}` : ""}`; });
+  }
+  root.innerHTML = `<div class="kicker">Forecasts</div><div class="row"><h1>The latest forecast for each market, issued before its gate</h1></div>
+    <div class="controls"><label>Market <select id="series-sel">${opts}</select></label><span class="badge">${H(S.gate)}</span></div>
+    ${FP.html}
+    ${/^power_price/.test(sel) ? `<div class="note">Hourly values. The day-ahead market trades in 15-minute periods since 1 Oct 2025; we forecast the hourly average.</div>` : ""}
+    ${replay}
+    ${det("fc-def", "Definitions", `${H(D.notes.metrics)} ${H(D.notes.intervals)} Spike flags are shown only for series whose backtest precision clears 50%${S.spike ? ` (this one: ${pct(S.spike.forecast.precision)})` : ""}.`)}`;
+  FP.wire(); wireReplay();
+  root.querySelector("#series-sel").addEventListener("change", e => { try { localStorage.setItem("ss.series", e.target.value); } catch (x) {} renderForecast(root); });
+}
+
+// ---------- Page: value ----------
+function renderEarnings(root) {
+  const K = D.decisions || {}; const HD = (K.hold || []).filter(r => !r.status);
+  const sgn = v => (v > 0 ? "+" : v < 0 ? "−" : "") + eur(Math.abs(v) / 1000, 1) + "k";
+  const pname = r => M[r.product + "_a1"] ? M[r.product + "_a1"].name.replace(" A1", "") : r.product;
+  const holdRows = HD.map(r => { const t = r.eur_per_mw; const bf = Math.max(t.always_a1, t.always_a2); const d = t.model - bf; const ci = r.delta_vs_best_fixed_ci;
+    const hist = t.mean30 != null && t.mean30 > (t.mean7 ?? -1e18) ? ["30-day mean", t.mean30, r.delta_vs_mean30_ci] : t.mean7 != null ? ["7-day mean", t.mean7, r.delta_vs_mean7_ci] : null;
+    const d7 = hist ? t.model - hist[1] : null; const c7 = hist ? hist[2] : null; const histName = hist ? hist[0] : "";
+    return `<tr><td>${H(pname(r))}</td><td class="n">${eur(t.model / 1000, 1)}k</td><td class="n ${ci[0] > 0 ? "up" : ci[1] < 0 ? "down" : ""}">${sgn(d)}<br><span style="color:var(--muted);font-weight:400;font-size:12px">${sgn(ci[0])} to ${sgn(ci[1])}</span></td>${d7 == null ? "" : `<td class="n ${c7 && c7[0] > 0 ? "up" : c7 && c7[1] < 0 ? "down" : ""}">${sgn(d7)}<br><span style="color:var(--muted);font-weight:400;font-size:12px">${c7 ? sgn(c7[0]) + " to " + sgn(c7[1]) : ""}, ${H(histName)}</span></td>`}<td class="n">${eur(t.hindsight / 1000, 1)}k</td></tr>`; }).join("");
+  const RK = K.ranking && !K.ranking.status ? K.ranking : null; const topShare = RK && RK.realised_top_share ? Object.entries(RK.realised_top_share).sort((a, b) => b[1] - a[1]) : null;
+  const shifter = D.shifter_record ? (() => { const SR = D.shifter_record; const areas = Object.keys(SR); const area = window.__shiftArea && SR[window.__shiftArea] ? window.__shiftArea : (areas.includes("SE3") ? "SE3" : areas[0]); const Rr = SR[area]; const profs = Object.keys(Rr.profiles);
+      const prof = window.__shiftProf && Rr.profiles[window.__shiftProf] ? window.__shiftProf : (profs.find(q => q.startsWith("4 h/day, any")) || profs[0]); const r = Rr.profiles[prof]; const months = Rr.months; const nm = Object.keys(r.months).length;
+      const MWHS = [4, 10, 20, 50]; const mwh = window.__shiftMwh && MWHS.includes(+window.__shiftMwh) ? +window.__shiftMwh : (r.hours_per_day || r.mwh_per_day); const sc = mwh / (r.hours_per_day || r.mwh_per_day);   // record is per 1 MW; scale to the site's MWh/day
+      const bars = months.map(mo => { const c = r.months[mo]; const v = c ? sc * c.saving_vs_yesterday_sek / 1000 : 0; return { label: monShort(mo + "-01"), bars: [{ v, color: v >= 0 ? "var(--green)" : "var(--orange)", title: `${mon(mo + "-01")}: ${fmt(v, 1)}k SEK` }] }; });
+      const scq = q => mwh / (Rr.profiles[q].hours_per_day || Rr.profiles[q].mwh_per_day);
+      const tbl = `<div class="tablewrap"><table><thead><tr><th>Month</th>${profs.map(q => `<th class="n">${H(q)}</th>`).join("")}</tr></thead><tbody>${months.map(mo => { const src = (Rr.profiles[profs[0]].months[mo] || {}).source || ""; return `<tr><td><span class="dot ${src === "live" ? "live" : ""}" title="${H(src)}"></span>${H(mon(mo + "-01"))}</td>${profs.map(q => { const c = Rr.profiles[q].months[mo]; if (!c) return "<td></td>"; return `<td class="n ${c.saving_vs_yesterday_sek > 0 ? "up" : "down"}">${fmt(scq(q) * c.saving_vs_yesterday_sek / 1000, 1)}k</td>`; }).join("")}</tr>`; }).join("")}<tr><td><b>Per year</b></td>${profs.map(q => { const z = Rr.profiles[q]; return `<td class="n"><b>${fmt(scq(q) * z.saving_per_year_sek / 1000, 0)}k</b><br><span style="color:var(--muted)">${z.months_positive}/${Object.keys(z.months).length} months up</span></td>`; }).join("")}</tr></tbody></table></div><div class="note"><span class="dot live"></span>live months from timestamped issues; grey from the backtest. All columns scaled to ${mwh} MWh/day.</div>`;
+      return `<h2>If you can move consumption between hours</h2>
+      <div class="controls"><label>Area <select id="shift-area">${areas.map(a => `<option ${a === area ? "selected" : ""}>${H(a)}</option>`).join("")}</select></label><label>Shiftable <select id="shift-mwh">${MWHS.map(v => `<option value="${v}" ${v === mwh ? "selected" : ""}>${v} MWh/day</option>`).join("")}</select></label><label>Pattern <select id="shift-prof">${profs.map(q => `<option ${q === prof ? "selected" : ""}>${H(q)}</option>`).join("")}</select></label></div>
+      <div class="cards" style="grid-template-columns:1fr"><div class="card"><div class="l">Saved per year by placing ${mwh} MWh/day on our 11:00 forecast instead of yesterday's prices</div><div class="v ${r.saving_per_year_sek > 0 ? "up" : "down"}">${fmt(sc * r.saving_per_year_sek / 1000, 0)}k SEK</div><div class="d">95% range ${fmt(sc * r.ci_per_year_sek[0] / 1000, 0)}k to ${fmt(sc * r.ci_per_year_sek[1] / 1000, 0)}k SEK, ${r.months_positive} of ${nm} months positive, ${mon(months[0] + "-01")} to ${mon(months[months.length - 1] + "-01")}, ${H(area)}, ${fmt(sc, 1)} MW for ${r.hours_per_day || r.mwh_per_day} h a day. Scaling assumes the same flexibility at every MW.</div>
+      <a class="cta" data-trial="1" href="${mailto("Shadow trial request: load-shift replay for my site", `Area ${area}, about ${mwh} MWh/day shiftable, pattern: ${prof}. Please run the replay on our profile.`)}">Run this on your own site: send your area and shiftable MWh/day, get the replay in 48 hours</a></div></div>
+      <div class="chart">${barChart(bars, { height: 160, yFmt: v => fmt(v, 0) + "k", label: "saving per month, thousand SEK" })}</div>
+      ${det("shift-months", "Month by month, all flexibility levels", tbl)}
+      ${det("shift-how", "How this is computed", "A site that places its flexible consumption at constant power in the cheapest hours of the day (or one contiguous block) and must decide before noon. The record is computed for 1 MW and scaled to the chosen MWh/day. Saving = what those hours cost when chosen on yesterday's prices minus what they cost when chosen on our forecast, both settled at the real day-ahead price. Public prices, our timestamped forecasts; the flexibility profile is the only assumption.")}`; })() : "";
+  root.innerHTML = `<div class="kicker">Value</div><div class="row"><h1>What the forecasts are worth, in decisions anyone can check</h1></div>
+    ${shifter}
+    ${HD.length ? `<h2>Reserve providers: sell in auction 1 or hold for auction 2</h2>
+    <div class="sub">EUR per MW over ${winLabel(D.window)}, deciding each night on our forecast</div>
+    <div class="tablewrap"><table><thead><tr><th>Product</th><th class="n">Earned</th><th class="n">vs best fixed rule</th>${HD[0] && HD[0].eur_per_mw.mean7 != null ? `<th class="n">vs strongest history rule</th>` : ""}<th class="n">Perfect foresight</th></tr></thead><tbody>${holdRows}</tbody></table></div>
+    <div class="note">Per MW of FCR capacity, clearing prices only: no fees, asset limits or activation. Best fixed rule = always auction 1 or always auction 2, whichever earned more. Strongest history rule = choose the auction with the higher trailing mean price for that hour, using the 7-day or the 30-day mean, whichever earned more for that product; both were computed on 10 Sep 2026 together with an adaptive fixed rule, and the strongest is shown. Perfect foresight = the better auction every hour. Ranges are 95% likely.</div>
+    ${topShare ? `<div class="note">Which capacity market pays most per MW, realised, ${winLabel(D.window)}: ${topShare.map(([k, v]) => `${H(sname(k))} ${pct(v)}`).join(", ")} of hours. A fixed choice of the top one earns as much as any forecast; the value is in the hours when it is not the top, and in the auction-1 versus auction-2 call above.</div>` : ""}
+    <a class="cta" data-trial="1" href="${mailto("Shadow trial request: FCR hold call for my portfolio", "Products and MW we bid, and the zone. Please replay the auction-1 vs auction-2 call on our numbers.")}">Run this on your own bids: send products and MW, get the replay in 48 hours</a>` : ""}
+    ${limitsBox()}
+    ${det("val-def", "Definitions", `${H(D.notes.decisions)} Green when the likely range is entirely above zero, red when entirely below. Values are clearing prices per MW before fees, asset limits or activation. ${H(D.fx_note || "")}.`)}`;
+  const sa = root.querySelector("#shift-area"); if (sa) sa.addEventListener("change", () => { window.__shiftArea = sa.value; renderEarnings(root); });
+  const sm = root.querySelector("#shift-mwh"); if (sm) sm.addEventListener("change", () => { window.__shiftMwh = sm.value; renderEarnings(root); });
+  const sp = root.querySelector("#shift-prof"); if (sp) sp.addEventListener("change", () => { window.__shiftProf = sp.value; renderEarnings(root); });
+}
+
+// ---------- Page: tomorrow ----------
+function renderTomorrow(root) {
+  root.innerHTML = `<div id="tm-fc"></div><div id="tm-plan" style="margin-top:28px"></div>`;
+  renderForecast(root.querySelector("#tm-fc")); renderPlan(root.querySelector("#tm-plan"));
+}
+function renderPlan(root) {
+  const P = D.decision_plan; if (!P) { root.innerHTML = ""; return; }
+  const pname = r => M[r.product + "_a1"] ? M[r.product + "_a1"].name.replace(" A1", "") : r.product;
+  const holdRows = P.hold.map(r => { const bf = Math.max(r.value_a1, r.value_a2); return `<tr><td>${H(pname(r))}</td><td class="n">${r.hold_hours} of 24</td><td class="n ${r.hours_realised ? (r.value_model >= bf ? "up" : "down") : ""}">${r.hours_realised ? (r.value_model - bf >= 0 ? "+" : "") + eur(r.value_model - bf) : `<span style="color:var(--muted)">pending</span>`}</td><td class="n">${r.hours_realised ? eur(r.value_hindsight) : "–"}</td></tr>`; }).join("");
+  const callGrid = P.hold.length ? `<div class="chart">${barChart(P.hours.map(h => ({ label: String(h.hour).padStart(2, "0"), bars: P.hold.map(r => { const c = r.calls[h.hour]; return { v: 1, color: c.call === "hold for A2" ? "var(--orange)" : "var(--blue)", title: `${H(pname(r))} ${c.call} · auction 1 forecast ${fmt(c.fc_a1, 1)}${c.a1 !== null ? " real " + fmt(c.a1, 1) : ""} · auction 2 forecast ${fmt(c.fc_a2, 1)}${c.a2 !== null ? " real " + fmt(c.a2, 1) : ""}` }; }) })), { height: 110, range: [0, 1.05], yFmt: v => "", label: "sell in auction 1 (blue) or hold for auction 2 (orange), per product and hour" })}</div>` : "";
+  const spike = D.spike_alert ? (() => { const A = D.spike_alert; const L = A.latest; const cards = ["fcr_n_a2", "fcr_d_up_a2"].map(k => { const a = L && L.alerts.find(z => z.series === k); const r = A.record[k]; const b = A.backtest[k];
+      return `<div class="card"><div class="l">${H(sname(k))}${a ? ", " + H(dayName(a.delivery_day)) : ""}</div><div class="v">${a ? (a.alert ? `<span class="down">Spike likely</span>` : "No spike expected") : "–"}</div><div class="d">${a ? `chance ${pct(a.probability)}, alert above ${pct(a.threshold_prob)}${a.alert && a.coherent !== false ? ` · day max likely up to ${fmt(a.q90_day_max, 0)} EUR/MW` : ""}` : "first alert at 17:00"}<br><b>Backtest</b> (nine rolling folds, out of fold): ${pct(b.precision)} of alerts right, ${pct(b.recall)} of spike days caught; "it spiked yesterday" ${pct(b.naive)}.<br><b>Live, matured</b> (delivery day over, prices published): ${r && r.scored_days ? `${r.scored_days} days, ${r.alerts} alerts, ${r.hits} right, ${r.alerts - r.hits} wrong` : "none yet"} · <b>pending</b>: ${r && r.issued_days ? r.issued_days - r.scored_days : 0} day(s), not counted</div></div>`; }).join("");
+      return `<h2>Auction-2 spike alert, issued 17:00</h2><div class="cards">${cards}</div>`; })() : "";
+  root.innerHTML = `${P.hold.length ? `<div class="row"><h2 style="margin-top:0">Sell in auction 1 or hold for auction 2, ${H(dayName(P.date))}</h2><span class="badge">${P.hours_realised} of 24 hours realised</span></div>
+    <div class="sub">Per MW of FCR capacity, clearing prices only: no fees, asset limits or activation.</div>
+    ${legend([["var(--blue)", "Sell in auction 1"], ["var(--orange)", "Hold for auction 2"]])}${callGrid}
+    <div class="tablewrap"><table><thead><tr><th>Product</th><th class="n">Hours held</th><th class="n">vs best fixed rule, EUR/MW</th><th class="n">Perfect foresight</th></tr></thead><tbody>${holdRows}</tbody></table></div>
+    <div class="note">Perfect foresight = same product, same MW, realised clearing prices, choosing the better auction every hour. No battery model.</div>
+    <a class="cta" data-trial="1" href="${mailto("Shadow trial request: FCR hold call for my portfolio", "Products and MW we bid, and the zone. Please replay the auction-1 vs auction-2 call on our numbers.")}">Run this on your own bids: send products and MW, get the replay in 48 hours</a>` : ""}
+    ${spike}
+    ${det("plan-def", "Definitions", `A reserve provider decides the night before, per MW, whether to sell FCR capacity in auction 1 or hold it for auction 2; we show that call hour by hour and what it earned against always selling in one auction. Values are clearing prices per MW before fees, asset limits or activation.${D.spike_alert && D.spike_alert.note ? " " + H(D.spike_alert.note) : ""}`)}`;
+}
+
+// ---------- Page: models & method ----------
+function renderMethod(root) {
+  root.innerHTML = `<div id="me-ver"></div><div id="me-rest"></div>`; renderVersions(root.querySelector("#me-ver"));
+  root.querySelector("#me-rest").innerHTML = `
+    ${D.timeline ? (() => { const T = D.timeline; const keys = ["power_price_SE3", "fcr_n_a2", "fcr_d_down_a2", "mfrr_cm_up"].filter(k => T[k] && Object.keys(T[k]).length); if (!keys.length) return "";
+      const months = [...new Set(keys.flatMap(k => Object.keys(T[k])))].sort();
+      const tbl = `<div class="tablewrap"><table><thead><tr><th>Month</th>${keys.map(k => `<th class="n">${H(sname(k))}</th>`).join("")}<th></th></tr></thead><tbody>
+        ${months.map(mo => { const cell = keys.map(k => T[k][mo]).find(Boolean) || {}; const [mo0, ver] = mo.split(" · "); return `<tr><td><span class="dot ${cell.source === "live" ? "live" : ""}"></span>${H(mon(mo0 + "-01"))}${ver ? `, ${H(ver)}` : ""}</td>${keys.map(k => { const c = T[k][mo]; if (!c) return "<td></td>"; const sk = 1 - c.mae_model / c.mae_naive; return `<td class="n ${sk > 0 ? "up" : "down"}">${pct(sk)}</td>`; }).join("")}</tr>`; }).join("")}</tbody></table></div><div class="note">Error reduction vs same-as-yesterday per month. <span class="dot live"></span>live months from timestamped issues; grey from the backtest.</div>`;
+      return det("me-months", "Month by month, backtest to live", tbl); })() : ""}
+    ${limitsBox()}
+    <h2>The headline evaluations, fixed in advance</h2>
+    <div class="sub">Declared 10 September 2026, valid through 31 December 2026. The home page headlines two figures and they will not be swapped in that period: if either weakens it turns red on the page. <b>Spot SE3 against same-as-yesterday</b>, because it is the deepest series, the one every reader can check against Nord Pool, and the largest scored sample. <b>FCR-D up, auction 1 or hold for auction 2, against the best fixed rule</b>, because on the reserved window (${H(winLabel(D.window))}) it is the one of three FCR products whose 95% range clears zero; FCR-N's range crosses zero and FCR-D down is negative, and both stay on the value page. A change of headline is a dated entry here that keeps the old series visible.</div>
+    <h2>How to trust this</h2>
+    <div class="sub">Every forecast is hashed, timestamped by an independent authority before the market gate and committed to a public repository. Only hours not yet published at issue time are scored. A new model version replaces the old one only when it beats it on nine rolling two-month test periods under a rule fixed in advance.</div>
+    ${det("me-def", "Definitions", `${H(D.notes.metrics)} ${H(D.notes.intervals)} ${H(D.notes.spike)} Adoption rule: nine rolling two-month folds Mar 2025 to Aug 2026; adopt when the pooled interval excludes zero, at least six of nine folds improve, no fold is significantly worse beyond 1%, and the sign holds after dropping the top 1, 3 and 5 spike days per fold. The pipeline is deterministic.`)}`;
+}
+function renderVersions(root) {
+  let win = "A"; try { win = localStorage.getItem("ss.vwin") || win; } catch (e) {}
+  const V = D.versions; const inWin = V.filter(v => v.windows[win]); const allSeries = [...new Set(inWin.flatMap(v => Object.keys(v.windows[win])))];
+  const pick = ["power_price_SE3", "fcr_n_a1", "fcr_d_up_a2", "fcr_d_down_a2", "mfrr_up", "mfrr_cm_up"].filter(s => allSeries.includes(s));
+  const colors = ["var(--blue)", "#6aa6e8", "var(--orange)", "#f0a07a", "var(--green)", "#7fd4b0", "var(--gold)", "var(--violet)"];
+  const n = V.length; const FLOOR = -0.5; const raw = pick.map(s => V.map(v => v.windows[win] && v.windows[win][s] ? v.windows[win][s].skill : null));
+  const series = pick.map((s, i) => ({ values: raw[i].map(x => x == null ? null : Math.max(FLOOR, x)), color: colors[i], width: 2 }));
+  const clipped = raw.flatMap((r, i) => r.map((x, j) => x != null && x < FLOOR ? [j, FLOOR, `${sname(pick[i])} ${pct(x)}`] : null).filter(Boolean));
+  const ch = lineChart({ n, height: 260, label: "error reduction by version", yFmt: v => pct(v), range: [FLOOR - 0.05, 0.55], series, xLabels: V.map((v, i) => [i, v.version]), notes: clipped });
+  const GROUPS = { "Spot": ["power_price_SE1", "power_price_SE2", "power_price_SE3", "power_price_SE4"], "FCR": ["fcr_n_a1", "fcr_n_a2", "fcr_d_up_a1", "fcr_d_up_a2", "fcr_d_down_a1", "fcr_d_down_a2"], "mFRR": ["mfrr_up", "mfrr_down", "mfrr_cm_up", "mfrr_cm_down"] };
+  const gmean = (v, ss) => { const k = ss.map(s => v.windows[win] && v.windows[win][s] ? v.windows[win][s].skill : null).filter(x => x !== null); return k.length ? k.reduce((a, b) => a + b, 0) / k.length : null; };
+  const table = V.slice().reverse().map(v => `<tr><td class="num"><b>${H(v.version)}</b><br><span style="color:var(--muted);font-size:12px">${H(v.date.slice(0, 10))}</span></td>${Object.keys(GROUPS).map(g => { const m = gmean(v, GROUPS[g]); return `<td class="n">${m === null ? "–" : pct(m)}</td>`; }).join("")}</tr>`).join("");
+  root.innerHTML = `<div class="kicker">Method</div><div class="row"><h1>How accuracy has moved, version by version</h1></div>
+    <div class="sub">Error reduction vs same-as-yesterday, every version scored on the same hours with the same rules</div>
+    <div class="controls"><label>Tested on <select id="vwin">${["A", "B", "C"].map(w => `<option value="${w}" ${w === win ? "selected" : ""}>${winLabel(w)}</option>`).join("")}</select></label></div>
+    ${legend(pick.map((s, i) => [colors[i], sname(s)]))}
+    <div class="chart" id="ver-chart">${ch.svg}</div>
+    <h2>By market</h2><div class="tablewrap"><table><thead><tr><th>Version</th><th class="n">Spot</th><th class="n">FCR</th><th class="n">mFRR</th></tr></thead><tbody>${table}</tbody></table></div>`;
+  attachHover(root.querySelector("#ver-chart"), n, i => `<b>${H(V[i].version)} · ${H(V[i].date.slice(0, 10))}</b><br>${pick.map((s, k) => `${sname(s)}: ${raw[k][i] == null ? "–" : pct(raw[k][i])}`).join("<br>")}`);
+  root.querySelector("#vwin").addEventListener("change", e => { try { localStorage.setItem("ss.vwin", e.target.value); } catch (x) {} renderVersions(root); });
+}
+
+
+// ---------- Page: home (the site) ----------
+function renderHome(root) {
+  const S = D.series.power_price_SE3; const L = D.live; const hdUp = ((D.decisions || {}).hold || []).find(r => r.product === "fcr_d_up" && !r.status);
+  const hdGain = hdUp ? hdUp.eur_per_mw.model - Math.max(hdUp.eur_per_mw.always_a1, hdUp.eur_per_mw.always_a2) : null;
+  const FP = forecastPanel("power_price_SE3", { height: 250 });
+  const hp = document.getElementById("hero-panel"); if (hp) { hp.innerHTML = FP.html + `<div class="actions" style="margin-top:10px"><a class="btn ghost" href="#forecasts">All markets</a></div>`; setTimeout(FP.wire, 0); }
+  // evidence strip (static labels in the HTML): one live row, one backtest row, same weight; every figure with its window, n and interval
+  const s3 = L && L.series_skill && L.series_skill.power_price_SE3; const nIss = L ? (L.n_issues != null ? L.n_issues : (L.issues || []).length) : 0; const scoredH = L && L.scored_hours != null ? L.scored_hours : 0; const nSer = L && L.series_skill ? Object.keys(L.series_skill).length : 0;
+  const since = sinceTxt(L);
+  const fill = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  fill("ev-live-k", L && nIss ? `Live since ${since}` : "Live"); fill("ev-issues", String(nIss)); fill("ev-hours", fmt(scoredH)); fill("ev-hours-t", `scored hours across ${nSer} series`);
+  fill("ev-live-skill", s3 ? pct(s3.skill) : "–"); fill("ev-live-skill-t", s3 ? `lower error than same-as-yesterday on spot SE3, ${s3.hours} hours, ${s3.issues} issue${s3.issues === 1 ? "" : "s"}, no interval yet` : "spot SE3: no scored hours yet");
+  fill("ev-bt-k", `Backtest ${winLabel(D.window)}${S && S.ci ? `, ${S.ci.days} days` : ""}`); fill("ev-bt-skill", S ? pct(S.skill) : "–"); fill("ev-bt-skill-t", `lower error than same-as-yesterday on spot SE3, ${S ? fmt(S.n_cells) : "–"} scored hours, 95% range ${S && S.ci ? ciTxt(S.ci.skill_ci, v => pct(v)) : "no interval yet"}`);
+  fill("ev-hold", hdGain == null ? "–" : sgnk(hdGain)); fill("ev-hold-t", `per MW, FCR-D up, auction 1 or 2 on our forecast vs the best fixed rule${hdUp ? `, ${hdUp.decision_days} days, 95% range ${ciTxt(hdUp.delta_vs_best_fixed_ci, sgnk)}` : ""}; the one of three FCR products clearly positive`);
+  root.innerHTML = `
+    <div class="section"><div class="eyebrow">From signal to decision</div><h2 class="big">Built around the decisions you make.</h2>
+      ${doorsHtml()}</div>
+    <div class="section"><div class="eyebrow">A forecast should leave a record</div><h2 class="big">Don't take our word. Check the outcome.</h2>
+      <p class="lead">The forecast is half the story. Compare what was predicted with what happened, same market, same hour, and verify the timestamp yourself.</p>
+      <div class="split"><div class="steps">
+        <div class="step"><div class="k">01</div><div class="h">Issued before delivery</div><div class="d">Each forecast is committed and timestamped before the market gate: 00:00 for the auctions, 11:00 for day-ahead, 17:00 for auction 2.</div></div>
+        <div class="step"><div class="k">02</div><div class="h">Compared with the outcome</div><div class="d">Only hours not yet published at issue time are scored, against the same hour yesterday and against what an operator could have earned.</div></div>
+        <div class="step"><div class="k">03</div><div class="h">Open to inspection</div><div class="d">Forecast files, sha256 hashes and RFC 3161 receipts are in a public repository. One openssl command checks any issue.</div></div>
+      </div>
+      <figure class="illus"><img src="img/grid.webp" width="1200" height="800" loading="lazy" alt="Wind turbines, a substation, an industrial site and battery cabinets connected by one line"><figcaption>Illustration: the assets these markets serve. Charts on this site are drawn from data, never inside artwork.</figcaption></figure></div>
+      <div class="actions"><a class="btn ghost" href="#record">Forecast by forecast</a></div></div>
+    <div class="section">${limitsBox()}</div>
+    <div class="band"><div><h2>Run it on your own numbers.</h2><p>Send your area and shiftable MWh/day, or the products and MW you bid. You get the replay on your own profile within 48 hours. No account, no fee.</p></div>
+      <a class="btn" data-trial="1" href="${mailto("Shadow trial request", "Area, shiftable MWh/day or products and MW, and how early we must commit.")}">Request a shadow trial</a></div>`;
+}
+
+// ---------- Page: track record ----------
+function renderLive(root) {
+  const L = D.live;
+  if (!L || !L.issues.length) { root.innerHTML = `<div class="kicker">Track record</div><h1>No live issues yet</h1><div class="sub">Forecasts are committed before each market gate and scored as prices arrive.</div>`; return; }
+  const floorOf = k => (D.series[k] ? 0.1 * D.series[k].mae_naive : 0);
+  // skill = 1 - MAE_model / MAE_naive explodes when the naive error is near zero (a flat day on a floor-priced series): show "flat" then
+  const skillTxt = (k, p, minHours = 0) => p.hours != null && p.hours < minHours ? `<span style="color:var(--muted)" title="too few hours to judge: ${p.hours} of 24">${pct(p.skill)}</span>` : p.mae_naive >= floorOf(k) ? `<span class="${p.skill > 0 ? "up" : "down"}">${pct(p.skill)}</span>` : `<span style="color:var(--muted)" title="flat day: same-as-yesterday error ${fmt(p.mae_naive, 2)}, ours ${fmt(p.mae_model, 2)}">flat</span>`;
+  // headline: backtest error reduction on spot SE3 and across the reserve series
+  const spot = D.series.power_price_SE3; const reserve = Object.keys(D.series).filter(k => /^fcr_.*_a[12]$|^mfrr_cm_/.test(k)).map(k => D.series[k].skill); const rlo = Math.min(...reserve), rhi = Math.max(...reserve);
+  // top chart: realised vs the latest forecast per hour, with a range selector; the unrealised tail is the current forecast
+  const C = D.live_chart || {}; const cKeys = Object.keys(C); let cs = window.__chartSeries && C[window.__chartSeries] ? window.__chartSeries : (C["power_price_SE3"] ? "power_price_SE3" : cKeys[0]);
+  const range = window.__chartRange || "7d"; let chartHtml = "";
+  if (cs) { const S = C[cs]; const n0 = S.t.length; const hoursBack = { "1d": 24, "7d": 24 * 7, "30d": 24 * 30, "all": n0 }[range] || n0;
+    const lastReal = S.realised.map((v, i) => v === null ? -1 : i).reduce((a, b) => Math.max(a, b), -1); const start = Math.max(0, (lastReal >= 0 ? lastReal + 1 : n0) - hoursBack);
+    const t = S.t.slice(start), re = S.realised.slice(start), fc = S.forecast.slice(start); const n = t.length;
+    const futureFrom = re.map((v, i) => v === null ? -1 : i).reduce((a, b) => Math.max(a, b), -1) + 1;
+    const lab = i => { const d = new Date(t[i].slice(0, 10) + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" }).replace("Sept", "Sep"); return n <= 96 ? (MOBILE() ? t[i].slice(11, 16) : d + " " + t[i].slice(11, 16)) : d; };
+    const ch = lineChart({ n, height: 240, label: "realised vs forecast", yFmt: v => fmt(v, 0), series: [{ values: fc, color: "var(--orange)", dash: "5 4", width: 2 }, { values: re, color: "var(--blue)", width: 2.5 }],
+      shade: futureFrom < n ? [[futureFrom, n - 1, "var(--blue-soft)"]] : [], xLabels: [0, Math.floor(n / 3), Math.floor(2 * n / 3), n - 1].filter((v, i, a) => a.indexOf(v) === i).map(i => [i, lab(i)]) });
+    chartHtml = `<div class="controls"><select id="chart-series">${cKeys.map(k => `<option value="${H(k)}" ${k === cs ? "selected" : ""}>${H(sname(k))}</option>`).join("")}</select><span class="badge">${H(S.unit)}</span></div>
+      ${legend([["var(--blue)", "Realised"], ["var(--orange)", "Our forecast", true], ["var(--blue-soft)", "Not yet realised"]])}
+      <div class="chart" id="live-chart">${ch.svg}</div>
+      <div class="ranges">${["1d", "7d", "30d", "all"].map(r => `<button data-r="${r}" class="${r === range ? "on" : ""}">${r === "all" ? "All" : r}</button>`).join("")}</div>`;
+    setTimeout(() => { const el = document.getElementById("live-chart"); if (el) attachHover(el, n, i => `<b>${H(t[i].slice(0, 16).replace("T", " "))}</b><br>forecast ${fc[i] === null ? "–" : fmt(fc[i], 1)} · realised ${re[i] === null ? "pending" : fmt(re[i], 1)}`); }, 0);
+  }
+  const trackRows = Object.keys(D.series).map(k => { const b_ = D.series[k]; const l_ = L.series_skill[k];
+    return `<tr><td>${H(sname(k))}</td><td class="n">${l_ ? l_.hours : 0}</td><td class="n">${l_ ? skillTxt(k, l_, 24) : "–"}</td><td class="n ${b_.skill > 0 ? "up" : "down"}">${pct(b_.skill)}</td></tr>`; }).join("");
+  // forecast-by-forecast record follows the chart's series
+  if (cs && !HOURS[cs]) { HOURS[cs] = []; need("hours/" + cs).then(j => { HOURS[cs] = j.live_rows || []; if (page === "record") render(); }).catch(() => {}); }   // hourly rows: this series only, fetched once
+  const record = cs && HOURS[cs] && HOURS[cs].length ? (() => { const R = HOURS[cs]; const issues = [...new Set(R.map(r => r.issued))].sort().reverse();
+      const selI = window.__logIssue && issues.includes(window.__logIssue) ? window.__logIssue : issues[0]; const rows = R.filter(r => r.issued === selI);
+      const body = `<div class="controls"><label>Issued <select id="log-issue">${issues.map(i => `<option ${i === selI ? "selected" : ""}>${H(i.slice(0, 16).replace("T", " "))}</option>`).join("")}</select></label></div>
+        <div class="tablewrap"><table><thead><tr><th>Hour</th><th class="n">Forecast</th><th class="n">Realised</th><th class="n">Yesterday</th><th></th></tr></thead><tbody>
+        ${rows.map(r => `<tr style="${r.published_at_issue ? "color:var(--muted)" : ""}"><td>${H(r.target.slice(0, 16).replace("T", " "))}</td><td class="n">${fmt(r.forecast, 1)}</td><td class="n">${r.realised === null ? `<span style="color:var(--muted)">pending</span>` : fmt(r.realised, 1)}</td><td class="n">${r.naive === null ? "" : fmt(r.naive, 1)}</td><td style="color:var(--muted);font-size:12px">${r.published_at_issue ? "known at issue, not scored" : ""}</td></tr>`).join("")}</tbody></table></div>`;
+      return det("record", `Forecast by forecast, ${H(sname(cs))}`, body); })() : "";
+  const issueLog = L.issues.map(x => { const per = x.per_series.map(p => `${H(p.name)} ${skillTxt(p.series, p)}`).join(", ");
+    return `<div class="li" style="align-items:flex-start; flex-direction:column; gap:4px"><div style="display:flex; justify-content:space-between; width:100%; gap:8px"><span><b>${H(dayName(x.date))}</b>, ${H(x.issue === "a1" ? "00:00" : x.issue === "spot" ? "11:00" : "17:00")} issue</span><span class="num" style="color:var(--muted); font-size:12px">${x.forecast_commit ? H(x.forecast_commit) : ""}</span></div>
+      <div style="font-size:12px; color:var(--ink2)">${x.hours_realised} of ${x.hours_forecast} hours realised, ${x.final ? "final" : "provisional"}${x.data_age_h != null ? `, oldest input at issue ${fmt(x.data_age_h, 0)} h` : ""}${per ? ". " + per : ""}</div></div>`; }).join("");
+  const PR = D.proof; const verify = PR ? (`<div class="verify"><b>Verify the newest issue yourself.</b> Latest issue: ${H(dayName(PR.date))}, ${H(PR.issue === "a1" ? "00:00" : PR.issue === "spot" ? "11:00" : "17:00")} issue, commit <a href="${PR.repo}/commit/${H(PR.commit)}" target="_blank" rel="noopener">${H(PR.commit)}</a>, timestamped ${H(PR.tsa_time || "")} by <a href="${H(PR.tsa || "")}" target="_blank" rel="noopener">freetsa.org</a>.<br>sha256 <code style="font-size:11px;word-break:break-all">${H(PR.sha256 || "")}</code><br>
+      1. Open <a href="${PR.repo}/blob/main/HASHES.md" target="_blank" rel="noopener">HASHES.md</a>: the hash above is listed with the issue time.<br>
+      2. Download <a href="${PR.repo}/blob/main/proofs/${H(PR.date)}/${H(PR.issue)}.csv.tsr" target="_blank" rel="noopener">the timestamp receipt</a> and the forecast file (${PR.released ? `<a href="${PR.repo}/blob/main/forecasts/${H(PR.date)}/${H(PR.issue)}.csv" target="_blank" rel="noopener">released</a>` : "released after " + H(PR.released_after) + ", once the delivery day has passed"}).<br>
+      3. Run <code style="font-size:11px">openssl ts -verify -data ${H(PR.issue)}.csv -in ${H(PR.issue)}.csv.tsr -CAfile freetsa_cacert.pem</code> and check that <code style="font-size:11px">sha256sum ${H(PR.issue)}.csv</code> matches. The timestamp authority's clock, not ours, attests that the file existed before the gate.</div>`) : "";
+  if (OPEN.issues === undefined) OPEN.issues = true;
+  root.innerHTML = `<div class="kicker">Track record</div><div class="row"><h1>Forecasts issued before the gate, scored as prices arrive</h1><span class="badge">Live since ${H(sinceTxt(L))}; every forecast timestamped and public</span></div>
+    ${chartHtml}
+    <h2>Series by series</h2>
+    <div class="tablewrap"><table><thead><tr><th>Series</th><th class="n">Live hours</th><th class="n">Live</th><th class="n">Backtest</th></tr></thead><tbody>${trackRows}</tbody></table></div>
+    <div class="note">Error reduction vs same-as-yesterday. Live = hours scored since ${H(sinceTxt(L))}, shown in grey until a series has 24 scored hours; backtest = ${winLabel(D.window)}, ${spot.ci ? spot.ci.days + " days" : ""}${spot.ci ? `, spot SE3 95% range ${ciTxt(spot.ci.skill_ci, v => pct(v))}` : ""}. Reserve series ${pct(rlo)} to ${pct(rhi)} in the backtest.</div>
+    ${det("issues", `Issue log, newest first`, `${verify}<div class="list">${issueLog}</div>`)}
+    ${record}
+    ${det("howto", "How to read this page", `Each issue is a file committed and timestamped before the market gate. "Oldest input at issue" is the age of the least fresh realised input the model saw; an issue that ran on stale inputs is kept and scored like any other. Only hours not yet published at issue time are scored, against the same hour yesterday. One day is noise; the pooled numbers carry the weight. A score is provisional until every realised value is older than the settlement revision window. On flat days the percentage is replaced by "flat".`)}`;
+}
+
+// ---------- shell: hash routes (#home, #forecasts, #record, #value, #method); each page's data is fetched on first visit ----------
+let routing = 0;
+async function route(opts = {}) {
+  page = pageFromHash(); const my = ++routing;
+  document.querySelectorAll("#nav a[data-p]").forEach(a => a.classList.toggle("on", a.dataset.p === page));
+  const nav = document.getElementById("nav"), mb = document.getElementById("menu-btn"); nav.classList.remove("open"); mb.setAttribute("aria-expanded", "false");
+  const ht = document.getElementById("hdr-trial"); if (ht && CONTACT.email) ht.href = mailto("Shadow trial request", "Area, shiftable MWh/day or products and MW, and how early we must commit.");
+  const home = document.getElementById("home-page"), app = document.getElementById("app");
+  if (page === "home") { app.hidden = true; app.innerHTML = ""; home.hidden = false; renderHome(document.getElementById("home-dyn")); }
+  else {
+    home.hidden = true; app.hidden = false;
+    if (!LOADED[page]) app.innerHTML = '<div class="empty">Loading…</div>';
+    try { Object.assign(D, await need(page)); } catch (e) { app.innerHTML = `<div class="empty">This page's data could not be loaded (${H(e.message)}). Reload to try again.</div>`; return; }
+    if (my !== routing) return;
+    ({ record: renderLive, forecasts: renderTomorrow, value: renderEarnings, method: renderMethod }[page] || renderHome)(app);
+  }
+  const cse = document.getElementById("chart-series"); if (cse) cse.addEventListener("change", () => { window.__chartSeries = cse.value; render(); });
+  document.querySelectorAll(".ranges button").forEach(b => b.addEventListener("click", () => { window.__chartRange = b.dataset.r; render(); }));
+  const li = document.getElementById("log-issue");
+  if (li) li.addEventListener("change", () => { window.__logIssue = li.value; render(); });
+  document.querySelectorAll("details[data-k]").forEach(d => d.addEventListener("toggle", () => { OPEN[d.dataset.k] = d.open; }));
+  document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+  document.querySelectorAll("[data-trial]").forEach(a => { if (!a.dataset.wired) { a.dataset.wired = "1"; a.addEventListener("click", () => { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: "trial-click", title: "Shadow trial request (click)", event: true }); }); } });
+  if (window.goatcounter && goatcounter.count && opts.count !== false) goatcounter.count({ path: location.pathname + "#" + page, title: document.title + (page === "home" ? "" : " · " + page) });
+  document.getElementById("foot").innerHTML = `<div class="foot-grid"><div><b>Ancillary Services Insights</b> by Jacob's Code<br>Jacob Ekedahl, Sweden. <a href="mailto:${H(CONTACT.email || "")}">${H(CONTACT.email || "")}</a> <a href="${H(CONTACT.linkedin || "#")}" target="_blank" rel="noopener">LinkedIn</a> <a href="${H(CONTACT.repo || "#")}" target="_blank" rel="noopener">Forecast files and proofs on GitHub</a></div>
+    <div>Model version ${H(cur.version)}. Page built ${H(dayName(D.built_at.slice(0, 10)))} ${H(D.built_at.slice(11, 16))} ${H(tzName(new Date(D.built_at)))}. ${D.mode === "backtest" ? `Backtest mode, ${H(winLabel(D.window))}.` : ""} ${H(D.fx_note || "")}.<br>Shadow trial: send your area and shiftable MWh/day, or the products and MW you bid, and get the replay on your own numbers within 48 hours. No account, no fee.</div></div>`;
+  if (!opts.keepScroll) window.scrollTo(0, 0);
+}
+const render = () => route({ keepScroll: true, count: false });
+window.addEventListener("hashchange", () => route());
+document.addEventListener("click", e => { const a = e.target.closest("[data-scroll]"); if (a) { e.preventDefault(); const el = document.getElementById(a.dataset.scroll); if (el) el.scrollIntoView({ block: "center" }); } });
+let wasMobile = MOBILE(); window.addEventListener("resize", () => { if (MOBILE() !== wasMobile) { wasMobile = MOBILE(); render(); } });
+document.getElementById("menu-btn").addEventListener("click", () => { const nav = document.getElementById("nav"), mb = document.getElementById("menu-btn"); const open = !nav.classList.contains("open"); nav.classList.toggle("open", open); mb.setAttribute("aria-expanded", String(open)); });
+if (!D) { document.getElementById("main").innerHTML = '<div class="empty">No data embedded. Run scripts/dashboard/build_dashboard.py.</div>'; } else { route(); }
+</script>
+</body>
+</html>
