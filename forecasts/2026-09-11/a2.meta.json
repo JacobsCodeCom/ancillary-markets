@@ -1,0 +1,27 @@
+{
+ "issue": "a2",
+ "issue_date": "2026-09-11",
+ "issued_at_local": "2026-09-11T17:00:55.015802+02:00",
+ "wall_clock_local": "2026-09-11T17:00:55+02:00",
+ "gates": "FCR auction 2 18:00",
+ "series": [
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "model_version": "v0.8",
+ "code_commit": "26b7f11",
+ "data_freshness_utc": {
+  "power_price_SE3": "2026-09-12 21:00:00",
+  "fcr_n_a1": "2026-09-12 21:00:00",
+  "fcr_n_a2": "2026-09-11 21:00:00",
+  "mfrr_cm_up": "2026-09-12 21:00:00",
+  "mfrr_up": "2026-09-11 14:00:00",
+  "up_reg_price_SE3": "2026-09-11 13:00:00",
+  "consumption_mwh_SE3": "2026-09-10 20:00:00",
+  "fcst_temperature_2m_previous_day1_SE3": "2026-09-12 21:00:00"
+ },
+ "sha256": "d9c5b72024b0c15fdd7e1fc8ce1bfb9b1dadfa7b0ff5f60c65cb94b39fa671b7",
+ "backfill": false,
+ "rules": "hours flagged published_at_issue were public at issue time and are not scored; naive = same hour on the most recent known day; P10/P90 = forecast + empirical residual quantiles"
+}
