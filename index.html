@@ -25,7 +25,7 @@
   .wrap { padding-inline:clamp(16px, 3.75vw, 72px); }
   header { display:flex; justify-content:space-between; align-items:center; height:64px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(243,246,245,0.92); backdrop-filter:blur(8px); z-index:5; }
   header nav { display:flex; gap:28px; align-items:center; } header nav a { color:var(--muted); } header nav a:hover { color:var(--ink); text-decoration:none; }
-  header .btn { padding:10px 16px; }
+  header .btn { padding:10px 16px; } header .br { display:none; }
   section { border-top:1px solid var(--line); padding-block:88px; }
   section.first { border-top:0; padding-block:0; }
   h1 { font-size:clamp(44px, 3.85vw, 74px); font-weight:600; line-height:0.98; letter-spacing:-0.04em; margin:0; text-wrap:balance; }
@@ -56,6 +56,7 @@
   .proof .huge { font-size:clamp(72px, 8.75vw, 168px); color:var(--blue); }
   .proof .lbl { font-family:"Geist Mono",Menlo,monospace; font-size:14px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; }
   .proof .sub { font-size:15px; color:var(--muted); }
+  .more { display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:24px; }
   .where { display:grid; grid-template-columns:440px 1fr; gap:64px; }
   .mapwrap { position:relative; display:flex; gap:20px; align-items:flex-start; }
   .zone { cursor:pointer; transition:fill .2s; }
@@ -178,7 +179,8 @@
     .timeline { grid-template-columns:1fr 1fr; } .step:nth-child(2) { border-right:0; } .step:nth-child(1), .step:nth-child(2) { border-bottom:1px solid var(--line); }
   }
   @media (max-width: 640px) {
-    header nav a:not(.btn) { display:none; } header > a.cap { font-size:10px; max-width:150px; line-height:1.2; } header .btn { font-size:11px; padding:9px 12px; } header .btn .arr { display:none; } h1 mark { white-space:normal; } h1 mark::before { display:none; } section { padding-block:56px; } .proof { grid-template-columns:1fr; } .proof > div { border-right:0; border-bottom:1px solid var(--line); } .proof > div:last-child { border-bottom:0; }
+    header { height:auto; flex-wrap:wrap; padding-block:10px; row-gap:10px; } header nav { display:contents; } header > a.cap { font-size:10px; max-width:150px; line-height:1.2; order:0; } header .btn { font-size:11px; padding:9px 12px; order:1; margin-left:auto; } header .btn .arr { display:none; }
+    header .br { display:block; order:2; flex-basis:100%; height:0; } header nav a:not(.btn) { order:3; font-size:11px; margin-right:18px; } h1 mark { white-space:normal; } h1 mark::before { display:none; } section { padding-block:56px; } .proof { grid-template-columns:1fr; } .proof > div { border-right:0; border-bottom:1px solid var(--line); } .proof > div:last-child { border-bottom:0; }
     .timeline { grid-template-columns:1fr; } .step { border-right:0; border-bottom:1px solid var(--line); } .step:nth-child(4) { border-bottom:0; }
     .mapwrap { flex-direction:column; } .mapwrap svg { width:200px; height:auto; } .hard .nums .v { font-size:40px; } .cta .areas { flex-wrap:wrap; }
   }
@@ -187,7 +189,7 @@
 <body>
 <header class="wrap">
   <a href="./" class="cap" style="color:var(--ink)">Ancillary Services Insights</a>
-  <nav class="cap"><a href="app.html#forecasts">Markets</a><a href="app.html#record">Record</a><a href="app.html#method">Method</a><a href="#join" class="btn">Get tomorrow's forecast <span class="arr">→</span></a></nav>
+  <nav class="cap"><span class="br" aria-hidden="true"></span><a href="app.html#forecasts">Markets</a><a href="app.html#record">Record</a><a href="app.html#method">Method</a><a href="#join" class="btn">Get tomorrow's forecast <span class="arr">→</span></a></nav>
 </header>
 
 <section class="first wrap">
@@ -235,6 +237,7 @@
     <div><span class="big">210</span><span class="lbl">Days scored</span><span class="sub">Feb to Aug 2026, every hour</span></div>
     <div><span class="big">14</span><span class="lbl">Markets</span><span class="sub">four spot areas, ten reserve series</span></div>
   </div>
+  <div class="more" data-reveal><a href="app.html#record" class="btn">See every issue, hour by hour <span class="arr">→</span></a><span style="font-size:14px;color:var(--muted)">The full record: every forecast against what cleared, for all 14 markets, with <a href="app.html#method">how it is judged</a>.</span></div>
 </section>
 
 <section class="wrap">
@@ -282,7 +285,7 @@
   </form>
 </section>
 
-<footer class="wrap"><span>Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-14 14:31</span></footer>
+<footer class="wrap"><span><a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-14 14:31</span></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="panel">
