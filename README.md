@@ -15,3 +15,8 @@ openssl ts -verify -data forecasts/2026-09-09/spot.csv -in proofs/2026-09-09/spo
 Columns: series, target hour (UTC and local), horizon, forecast, P10/P90, whether the hour was already
 published at issue time (those hours are not forecasts and are not scored), and the same-as-yesterday
 baseline. `index.html` is the scoreboard.
+
+Tracks. `forecasts/<date>/<issue>.csv` is the main line (Compass). Files named `<issue>.<track>.csv` are other
+forecasting tracks run beside it on the same day, after the main issue and from the same information, each with
+its own hash and timestamp; the track and its version are in the file and in `HASHES.md`, and the Experiments
+page compares them on identical hours. Commits in this repository are tagged `[<Track> <version>]`.
