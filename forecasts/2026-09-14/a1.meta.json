@@ -1,0 +1,32 @@
+{
+ "issue": "a1",
+ "issue_date": "2026-09-14",
+ "issued_at_local": "2026-09-14T00:01:03.311441+02:00",
+ "wall_clock_local": "2026-09-14T00:01:03+02:00",
+ "gates": "FCR auction 1 00:30, mFRR CM 07:30 (auction-2 series included so the sell-in-A1-or-hold decision is on the record; from 10 Sep 2026)",
+ "series": [
+  "fcr_n_a1",
+  "fcr_d_up_a1",
+  "fcr_d_down_a1",
+  "mfrr_cm_up",
+  "mfrr_cm_down",
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "model_version": "v0.9",
+ "code_commit": "9aa4690",
+ "data_freshness_utc": {
+  "power_price_SE3": "2026-09-14 21:00:00",
+  "fcr_n_a1": "2026-09-14 21:00:00",
+  "fcr_n_a2": "2026-09-14 21:00:00",
+  "mfrr_cm_up": "2026-09-14 23:00:00",
+  "mfrr_up": "2026-09-13 21:00:00",
+  "up_reg_price_SE3": "2026-09-13 20:00:00",
+  "consumption_mwh_SE3": "2026-09-12 20:00:00",
+  "fcst_temperature_2m_previous_day1_SE3": "2026-09-14 23:00:00"
+ },
+ "sha256": "7590e74ff550d809e53e33d8e7f42b53dfed2d6a9190aaa5e5d1b29d262f9977",
+ "backfill": false,
+ "rules": "hours flagged published_at_issue were public at issue time and are not scored; naive = same hour on the most recent known day; P10/P90 = forecast + empirical residual quantiles"
+}
