@@ -26,7 +26,7 @@
   header { display:flex; justify-content:space-between; align-items:center; height:64px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(243,246,245,0.92); backdrop-filter:blur(8px); z-index:5; }
   header nav { display:flex; gap:28px; align-items:center; } header nav a { color:var(--muted); } header nav a:hover { color:var(--ink); text-decoration:none; }
   header .btn { padding:10px 16px; } header .br { display:none; }
-  .nextwrap { border-bottom:1px solid var(--line); background:#fff; } .next { display:flex; gap:14px; flex-wrap:wrap; align-items:center; padding-block:10px; font-family:"Geist Mono",Menlo,monospace; font-size:13px; color:var(--muted); } .next b { color:var(--ink); font-weight:600; } .next a { margin-left:auto; color:var(--acc); font-weight:600; } .next:empty { display:none; } .next .live i { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--acc); margin-right:8px; vertical-align:middle; }
+  .nextwrap { border-bottom:1px solid var(--line); background:#fff; } .next { display:flex; flex-direction:column; gap:4px; padding-block:8px; font-family:"Geist Mono",Menlo,monospace; font-size:13px; color:var(--muted); } .next .row { display:flex; gap:14px; flex-wrap:wrap; align-items:center; } .next b { color:var(--ink); font-weight:600; } .next a { margin-left:auto; color:var(--acc); font-weight:600; } .next:empty { display:none; } .next .live i { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--acc); margin-right:8px; vertical-align:middle; }
   @media (max-width: 1000px) { .next a { margin-left:0; } }
   section { border-top:1px solid var(--line); padding-block:88px; }
   section.first { border-top:0; padding-block:0; }
@@ -301,7 +301,7 @@
   </form>
 </section>
 
-<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 00:01</span></footer>
+<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 00:28</span></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="panel">
@@ -481,8 +481,13 @@ function nextIssueInfo() { const [hh, mm] = new Intl.DateTimeFormat("en-GB", { t
 const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 function nextIssueTxt() { const n = nextIssueInfo(); return `${n.today ? "today" : n.m === 0 ? "tonight" : "tomorrow"} ${hhmm(n.m)}`; }
 function paintNext() { const n = nextIssueInfo(); const el = $("next"); if (!el) return; const until = n.d < 60 ? `in ${n.d} min` : `in ${Math.floor(n.d / 60)} h ${String(n.d % 60).padStart(2, "0")} min`;
-  el.innerHTML = `<span class="cap live"><i></i>Next issue</span><b>${n.what}</b><span>${nextIssueTxt()} · ${until} · ${n.gate}</span><a href="app.html#live">Open forecasts →</a>`; }
+  el.innerHTML = `<div class="row"><span class="cap live"><i></i>Next issue</span><b>${n.what}</b><span>${nextIssueTxt()} · ${until} · ${n.gate}</span><a href="app.html#live">Open forecasts →</a></div>` + (window.__latest || ""); }
 paintNext(); setInterval(paintNext, 60000);
+// the latest issue, from the same data the explorer's Live page reads
+fetch("data/forecasts.json", { cache: "no-cache" }).then(r => r.json()).then(d => { const LI = d.latest_issue || {}; const ks = Object.keys(LI); if (!ks.length) return;
+  const newest = ks.reduce((a, k) => LI[k].issued_at > LI[a].issued_at ? k : a, ks[0]); const L = LI[newest]; const n = ks.filter(k => LI[k].issued_at === L.issued_at).length; const open = ks.filter(k => LI[k].hours_realised < (LI[k].hours_in_day || 24)).length;
+  const what = { a1: NEXT[0][1], spot: NEXT[1][1], a2: NEXT[2][1] }[L.issue] || L.issue; const day = s => new Date(s + "T00:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }).replace("Sept", "Sep");
+  window.__latest = `<div class="row"><span class="cap live"><i></i>Latest issue</span><b>${what}</b><span>${day(L.issue_date)} ${L.issued_at.slice(11, 16)} ${L.tz} · ${n} series for ${day(L.target_date)} · ${open} open</span><a href="app.html#live">See them →</a></div>`; paintNext(); }).catch(() => {});
 
 // the list: posts to the configured endpoint; without one, falls back to a prefilled email
 function join(form) {
