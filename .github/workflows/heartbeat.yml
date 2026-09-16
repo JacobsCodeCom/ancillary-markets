@@ -1,0 +1,25 @@
+# Dead-man's switch that the forecasting machine cannot suppress: GitHub runs this on its own clock and checks that the
+# issue that should have been pushed by now is listed in HASHES.md. A missing issue fails the run, and GitHub mails the
+# repository owner. Times are UTC; each window is 30-60 minutes after the issue time in both CET and CEST.
+name: heartbeat
+on:
+  schedule:
+    - cron: "40 23 * * *"   # 00:00 local issue (01:40 CEST / 00:40 CET)
+    - cron: "30 10 * * *"   # 11:00 local issue (12:30 CEST / 11:30 CET)
+    - cron: "30 16 * * *"   # 17:00 local issue (18:30 CEST / 17:30 CET)
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: the issue due by now is on the record
+        env:
+          TZ: Europe/Stockholm
+        run: |
+          hour=$(date +%H); today=$(date +%Y-%m-%d)
+          if [ "$hour" -ge 17 ]; then issue=a2; elif [ "$hour" -ge 11 ]; then issue=spot; else issue=a1; fi
+          echo "checking $issue for $today"
+          if grep -E "^\| $today [0-9:]+ \| $issue \| Compass" HASHES.md; then echo "ok: $issue $today is on the record"; else echo "MISSING: no $issue issue for $today in HASHES.md"; exit 1; fi
