@@ -301,7 +301,7 @@
   </form>
 </section>
 
-<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 00:28</span></footer>
+<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 07:58</span></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="panel">
@@ -484,7 +484,7 @@ function paintNext() { const n = nextIssueInfo(); const el = $("next"); if (!el)
   el.innerHTML = `<div class="row"><span class="cap live"><i></i>Next issue</span><b>${n.what}</b><span>${nextIssueTxt()} · ${until} · ${n.gate}</span><a href="app.html#live">Open forecasts →</a></div>` + (window.__latest || ""); }
 paintNext(); setInterval(paintNext, 60000);
 // the latest issue, from the same data the explorer's Live page reads
-fetch("data/forecasts.json", { cache: "no-cache" }).then(r => r.json()).then(d => { const LI = d.latest_issue || {}; const ks = Object.keys(LI); if (!ks.length) return;
+fetch(`data/forecasts.json?v=${Math.floor(Date.now() / 3e5)}`, { cache: "no-store" }).then(r => r.json()).then(d => { const LI = d.latest_issue || {}; const ks = Object.keys(LI); if (!ks.length) return;
   const newest = ks.reduce((a, k) => LI[k].issued_at > LI[a].issued_at ? k : a, ks[0]); const L = LI[newest]; const n = ks.filter(k => LI[k].issued_at === L.issued_at).length; const open = ks.filter(k => LI[k].hours_realised < (LI[k].hours_in_day || 24)).length;
   const what = { a1: NEXT[0][1], spot: NEXT[1][1], a2: NEXT[2][1] }[L.issue] || L.issue; const day = s => new Date(s + "T00:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }).replace("Sept", "Sep");
   window.__latest = `<div class="row"><span class="cap live"><i></i>Latest issue</span><b>${what}</b><span>${day(L.issue_date)} ${L.issued_at.slice(11, 16)} ${L.tz} · ${n} series for ${day(L.target_date)} · ${open} open</span><a href="app.html#live">See them →</a></div>`; paintNext(); }).catch(() => {});
