@@ -63,7 +63,7 @@
   .proof .lbl { font-family:"Geist Mono",Menlo,monospace; font-size:14px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; }
   .proof .sub { font-size:15px; color:var(--muted); }
   .more { display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:24px; }
-  .where { display:grid; grid-template-columns:440px 1fr; gap:64px; }
+  .where { display:grid; grid-template-columns: 1fr; gap:64px; }
   .mapwrap { position:relative; display:flex; gap:20px; align-items:flex-start; }
   .zone { cursor:pointer; transition:fill .2s; }
   .card { border:1px solid var(--line); background:#fff; padding:16px 18px; display:flex; flex-direction:column; gap:6px; min-width:230px; }
@@ -227,20 +227,13 @@
 <section class="wrap">
   <div class="split">
     <div style="display:flex;flex-direction:column;gap:16px" data-reveal><div class="cap" style="color:var(--acc)">How it works</div><h2>Locked before the market closes. Scored after.</h2><p class="lead" style="margin:0;max-width:48ch;font-size:17px">The forecast exists, hashed and timestamped by an independent authority, before anyone knows the price. Then the price arrives and the score is written next to it. Nothing is re-run.</p></div>
-    <div class="timeline" id="timeline">
-      <div class="step"><span class="t">11:01</span><span class="cap" style="color:var(--acc)">Forecast issued</span><span class="d">24 hours of tomorrow, with a likely range. Hashed.</span></div>
-      <div class="step"><span class="t">12:00</span><span class="cap">Market closes</span><span class="d">Bids are in. The forecast can no longer change.</span></div>
-      <div class="step"><span class="t">13:00</span><span class="cap">Prices published</span><span class="d">Tomorrow's actual prices clear and go public.</span></div>
-      <div class="step"><span class="t">00:01</span><span class="cap" style="color:var(--mint)">Forecast scored</span><span class="d">Hour by hour, against what cleared. On the record.</span></div>
-      <div class="track"><i></i><b></b></div>
-    </div>
-  </div>
-  <div class="issues" data-reveal="1">
+    <div class="issues" data-reveal="1">
     <div class="cap" style="color:var(--acc)">Three issues a day · each before its own gate</div>
     <div class="issue-grid">
       <div><span class="t">00:00</span><span class="cap">Reserves, auction 1</span><span class="d">FCR-N and FCR-D for tomorrow, and mFRR capacity. The first auction closes at 00:30, the capacity market at 07:30; results by 06:30 and 09:10.</span></div>
       <div><span class="t">11:00</span><span class="cap">Day-ahead</span><span class="d">Every hour of tomorrow for SE1 to SE4, and mFRR energy. The day-ahead market closes at 12:00; prices published 12:45.</span></div>
       <div><span class="t">17:00</span><span class="cap">Reserves, auction 2</span><span class="d">FCR-N and FCR-D again, with the day-ahead result known. The second auction closes at 18:00, results by 19:00; a provider can sell now or hold.</span></div>
+    </div>
     </div>
   </div>
 </section>
@@ -271,11 +264,6 @@
         <div class="card" id="area-card"></div>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:14px;min-width:0" data-reveal="1">
-      <div class="tabs" id="market-tabs" role="group" aria-label="Market"></div>
-      <div class="box"><div class="plot-head"><span style="font-size:18px;font-weight:600" id="mk-title"></span><span class="cap" id="mk-meta"></span></div><div id="mk-chart" class="draw"></div></div>
-      <div style="font-size:13px;color:var(--muted)" id="mk-note">Every chart on this page is a real issue and the prices that cleared after it.</div>
-    </div>
   </div>
 </section>
 
@@ -286,10 +274,6 @@
   </div>
 </section>
 
-<section class="wrap">
-  <div class="plot-head" style="align-items:flex-end;margin-bottom:20px" data-reveal><div style="display:flex;flex-direction:column;gap:12px"><div class="cap live" style="color:var(--acc)"><i></i>Live · newest issue</div><h2 id="latest-title"></h2></div><span class="cap" id="latest-meta"></span></div>
-  <div class="box" style="padding:24px 28px" data-reveal="1"><div id="latest-chart" class="draw"></div></div>
-</section>
 
 <section class="wrap cta" id="join">
   <div style="display:flex;flex-direction:column;gap:14px" data-reveal><div class="cap" style="color:var(--mint)">Get the issues you follow</div><h2>Before each gate closes.</h2><p class="lead" style="margin:0">Each issue for the markets you pick, by email, with its hash and receipt: day-ahead at 11:01, reserves at 00:01 and 17:01. The first 50 on the list get it free while the service is in shadow.</p></div>
@@ -301,7 +285,7 @@
   </form>
 </section>
 
-<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 11:01</span></footer>
+<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-17 13:09</span></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="panel">
@@ -406,11 +390,8 @@ function paint() {
   const s = current();
   if (!s) return;
   $("area-tabs").innerHTML = AREAS.map(a => `<button class="tab" data-area="${a}" aria-pressed="${state.market === "spot" && state.area === a}">${a}</button>`).join("");
-  $("market-tabs").innerHTML = MARKETS.filter(([, k]) => k === "spot" || H.reserves[k]).map(([l, k]) => `<button class="tab" data-market="${k}" aria-pressed="${state.market === k}">${l}</button>`).join("");
   render("hero-chart", s, 760, "hero-title", "hero-meta"); $("hero-summary").textContent = summary(s);
   $("hero-note").textContent = state.market === "spot" ? `Click an area. The chart is the real issue — ${s.issued} for ${s.day}.` : `${s.name}: the newest issue, already cleared at the auction.`;
-  render("mk-chart", s, 520, "mk-title", "mk-meta");
-  $("mk-note").textContent = state.market === "spot" ? "Every chart on this page is a real issue and the prices that cleared after it. Spot shows the latest fully scored day." : "Auction-1 prices for the delivery day clear at 00:30 the day before, so this issue is already scored.";
   const ca = state.hover || state.area; const a = H.areas[ca]; const st = H.stats["power_price_" + ca]; const pk = Math.max.apply(null, a.forecast); const ipk = a.forecast.indexOf(pk);
   const card = $("area-card"); card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
   card.innerHTML = `<span class="cap" style="color:var(--acc)">${ca} · ${esc(a.day)}</span><span class="b">${fmt(pk)} ${esc(a.unit)}</span><span style="font-size:12px;color:var(--muted)">forecast peak, ${String(ipk).padStart(2, "0")}:00</span><div class="g"><div><div class="v" style="color:var(--blue)">−${Math.round(st.skill * 100)}%</div><small>error vs yesterday</small></div><div><div class="v">${st.ordering >= 0 ? "+" : ""}${Math.round(st.ordering * 100)}%</div><small>hour ordering</small></div></div><span style="font-size:11px;color:var(--muted);margin-top:4px">hover an area · click to load it</span>`;
@@ -431,7 +412,6 @@ document.addEventListener("mouseout", e => { const z = e.target.closest("[data-z
   sp.mark = ipk; $("spike-title").textContent = `${sp.name} · ${sp.day}`; put("spike-chart", sp, 420);
   $("spike-fc").textContent = fmt(fc); $("spike-act").textContent = fmt(pk);
   const ca = sp.cheapest_hit; $("spike-text").textContent = `On ${sp.day} the forecast named ${ca} of the four cheapest hours and put the peak in the right place — and said ${fmt(fc)} for the ${String(ipk).padStart(2, "0")}:00 hour that cleared at ${fmt(pk)}. The record stays public so that this is never a surprise to a customer.`;
-  const L = H.latest; if (L) { $("latest-title").textContent = `${L.name} · ${L.day}`; $("latest-meta").textContent = `issued ${L.issued} · gate ${L.gate} · ${summary(L)}`; put("latest-chart", L, 640); }
   paint();
   // the ticker: every market on the page, twice over so the loop is seamless
   const all = AREAS.map(a => H.areas[a]).concat(Object.values(H.reserves)).filter(Boolean);
@@ -513,7 +493,7 @@ endIo.observe($("join"));
 $("modal-x").addEventListener("click", () => $("modal").classList.remove("open"));
 $("modal").addEventListener("click", e => { if (e.target === $("modal")) $("modal").classList.remove("open"); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") $("modal").classList.remove("open"); });
-let rt, rw = window.innerWidth; window.addEventListener("resize", () => { if (window.innerWidth === rw) return; rw = window.innerWidth; clearTimeout(rt); rt = setTimeout(() => { paint(); put("spike-chart", H.spike, 420); if (H.latest) put("latest-chart", H.latest, 640); }, 200); });
+let rt, rw = window.innerWidth; window.addEventListener("resize", () => { if (window.innerWidth === rw) return; rw = window.innerWidth; clearTimeout(rt); rt = setTimeout(() => { paint(); put("spike-chart", H.spike, 420); if (H.latest) ; }, 200); });
 
 </script>
 </body>
