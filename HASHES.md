@@ -31,3 +31,5 @@
 | 2026-09-17 11:01 | spot | Compass v0.10 | 12:00 day-ahead | `6bc8fdd5175e034a0b5ac4de48881ab18004ef2dc1818604e0b03c5aa47e23a7` | Sep 17 09:01:15 2026 GMT | released after 2026-09-19 |
 | 2026-09-17 11:06 | spot | Scout v0.1 | 12:00 day-ahead | `aff188127d8511d3c8f58ef83e56c73b79ebc33fb2b409870d0ffd5358fe955c` | Sep 17 09:12:27 2026 GMT | released after 2026-09-19 |
 | 2026-09-18 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `ddd8940b69a7058f541b252eda30608ef0a8f6c1d2a04f727c63a6df267470c4` | Sep 17 22:01:13 2026 GMT | released after 2026-09-20 |
+| 2026-09-18 11:01 | spot | Echo v0.1 | 12:00 day-ahead | `1ca548e77b11e28b7f594a8000439a3ff96ac45d8b04f3b0d568df53c30f01f9` | Sep 18 09:01:27 2026 GMT | released after 2026-09-20 |
+| 2026-09-18 11:01 | spot | Compass v0.10 | 12:00 day-ahead | `ba47302300538cff1dbd7baa9fc727a691555b8dcfc0cb46df0963c41fb5f5c5` | Sep 18 09:01:13 2026 GMT | released after 2026-09-20 |
