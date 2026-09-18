@@ -1,0 +1,35 @@
+{
+ "track": "battery",
+ "track_name": "Battery brief",
+ "version": "v0.1",
+ "issue": "battery",
+ "issue_date": "2026-09-18",
+ "target_date": "2026-09-19",
+ "issued_at_local": "2026-09-18T17:04:52+02:00",
+ "gates": "capacity market 07:30 the day before; energy bids 45 minutes before each quarter; day-ahead order before 12:00 the day before",
+ "thresholds_eur_mwh": {
+  "SE1": 9.87,
+  "SE2": 13.46,
+  "SE3": 23.29,
+  "SE4": 24.83
+ },
+ "buy_quarters": {
+  "SE1": 79,
+  "SE2": 96,
+  "SE3": 96,
+  "SE4": 96
+ },
+ "margin_eur_mwh": 5.0,
+ "quantile": 0.2,
+ "rule": [
+  "Hold mFRR capacity, up direction, in every hour the store can cover two quarters at full power; bid it at zero and take the marginal price (gate 07:30 the day before).",
+  "In every quarter of a held hour, bid the obligated energy at the day-ahead price plus 5 EUR/MWh (gate 45 minutes before the quarter). Under marginal pricing you are then activated whenever the zone regulates up at all, and paid the clearing price.",
+  "Refill with a price-conditional day-ahead order for tomorrow: buy 0.25 MWh in any quarter that clears at or below the 20th percentile of the previous seven days' quarter prices - and by down-regulation when not holding, where you are paid to charge.",
+  "Take every activation the market clears; never run a deliberate imbalance; keep the store able to deliver two quarters at full power."
+ ],
+ "code_commit": "dc226fd",
+ "sha256": "e52d3d86e8e6271f60bae0b796f9acaca47c3784e8da3e342848a115f42636aa",
+ "backfill": false,
+ "late": false,
+ "rules": "battery issue: the strategy's actions for the delivery day from the published day-ahead prices; released at once"
+}
