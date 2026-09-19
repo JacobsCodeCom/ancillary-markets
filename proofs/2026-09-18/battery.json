@@ -3,7 +3,7 @@
   "file": "forecasts/2026-09-18/battery.csv",
   "sha256": "e52d3d86e8e6271f60bae0b796f9acaca47c3784e8da3e342848a115f42636aa",
   "tsa": "https://freetsa.org/tsr",
-  "tsa_time": "Sep 18 15:05:09 2026 GMT",
+  "tsa_time": "Sep 19 10:16:07 2026 GMT",
   "tsr": "forecasts/2026-09-18/battery.csv.tsr",
   "verified": true,
   "verify": "Verification: OK"

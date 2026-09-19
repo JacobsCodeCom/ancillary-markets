@@ -5,7 +5,7 @@
  "issue": "battery",
  "issue_date": "2026-09-18",
  "target_date": "2026-09-19",
- "issued_at_local": "2026-09-18T17:04:52+02:00",
+ "issued_at_local": "2026-09-19T12:15:08+02:00",
  "gates": "capacity market 07:30 the day before; energy bids 45 minutes before each quarter; day-ahead order before 12:00 the day before",
  "thresholds_eur_mwh": {
   "SE1": 9.87,
@@ -19,15 +19,65 @@
   "SE3": 96,
   "SE4": 96
  },
+ "expected": {
+  "SE1": {
+   "net": 47.0,
+   "typical_low": -38.0,
+   "typical_high": 240.0,
+   "recent_mean": 100.0,
+   "days": 30,
+   "capacity": 42.0,
+   "capacity_known": true,
+   "energy": 116.0,
+   "refill": -17.0,
+   "degradation": -94.0
+  },
+  "SE2": {
+   "net": 61.0,
+   "typical_low": -18.0,
+   "typical_high": 244.0,
+   "recent_mean": 117.0,
+   "days": 30,
+   "capacity": 41.0,
+   "capacity_known": true,
+   "energy": 145.0,
+   "refill": -20.0,
+   "degradation": -105.0
+  },
+  "SE3": {
+   "net": 105.0,
+   "typical_low": 3.0,
+   "typical_high": 298.0,
+   "recent_mean": 153.0,
+   "days": 30,
+   "capacity": 39.0,
+   "capacity_known": true,
+   "energy": 214.0,
+   "refill": -32.0,
+   "degradation": -116.0
+  },
+  "SE4": {
+   "net": 124.0,
+   "typical_low": 7.0,
+   "typical_high": 324.0,
+   "recent_mean": 178.0,
+   "days": 30,
+   "capacity": 43.0,
+   "capacity_known": true,
+   "energy": 229.0,
+   "refill": -36.0,
+   "degradation": -112.0
+  }
+ },
  "margin_eur_mwh": 5.0,
  "quantile": 0.2,
  "rule": [
-  "Hold mFRR capacity, up direction, in every hour the store can cover two quarters at full power; bid it at zero and take the marginal price (gate 07:30 the day before).",
-  "In every quarter of a held hour, bid the obligated energy at the day-ahead price plus 5 EUR/MWh (gate 45 minutes before the quarter). Under marginal pricing you are then activated whenever the zone regulates up at all, and paid the clearing price.",
-  "Refill with a price-conditional day-ahead order for tomorrow: buy 0.25 MWh in any quarter that clears at or below the 20th percentile of the previous seven days' quarter prices - and by down-regulation when not holding, where you are paid to charge.",
+  "mFRR capacity market: offer the megawatt, up direction, in every hour of the day (gate 07:30 the day before).",
+  "mFRR energy market: in every quarter of a held hour, an energy bid at the price in the issue (gate 45 minutes before the quarter).",
+  "Day-ahead market: a buy order for the quarters in the issue, at the issue's limit price (gate 12:00 the day before); down-regulation refills the store when not holding.",
   "Take every activation the market clears; never run a deliberate imbalance; keep the store able to deliver two quarters at full power."
  ],
- "code_commit": "dc226fd",
+ "code_commit": "34d74bb",
  "sha256": "e52d3d86e8e6271f60bae0b796f9acaca47c3784e8da3e342848a115f42636aa",
  "backfill": false,
  "late": false,
