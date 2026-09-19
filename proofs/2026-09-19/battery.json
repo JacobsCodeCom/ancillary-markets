@@ -1,0 +1,11 @@
+[
+ {
+  "file": "forecasts/2026-09-19/battery.csv",
+  "sha256": "02201096caefa3fb3c6b043c939b37f8eca0425fdc82665a904a32b95f4b290e",
+  "tsa": "https://freetsa.org/tsr",
+  "tsa_time": "Sep 19 15:04:21 2026 GMT",
+  "tsr": "forecasts/2026-09-19/battery.csv.tsr",
+  "verified": true,
+  "verify": "Verification: OK"
+ }
+]

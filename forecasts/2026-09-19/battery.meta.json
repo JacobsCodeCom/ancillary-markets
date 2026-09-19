@@ -1,0 +1,85 @@
+{
+ "track": "battery",
+ "track_name": "Battery brief",
+ "version": "v0.1",
+ "issue": "battery",
+ "issue_date": "2026-09-19",
+ "target_date": "2026-09-20",
+ "issued_at_local": "2026-09-19T17:04:01+02:00",
+ "gates": "capacity market 07:30 the day before; energy bids 45 minutes before each quarter; day-ahead order before 12:00 the day before",
+ "thresholds_eur_mwh": {
+  "SE1": 7.06,
+  "SE2": 5.32,
+  "SE3": 9.51,
+  "SE4": 9.79
+ },
+ "buy_quarters": {
+  "SE1": 66,
+  "SE2": 66,
+  "SE3": 67,
+  "SE4": 67
+ },
+ "expected": {
+  "SE1": {
+   "net": 36.0,
+   "typical_low": -53.0,
+   "typical_high": 148.0,
+   "recent_mean": 83.0,
+   "days": 30,
+   "capacity": 36.0,
+   "capacity_known": true,
+   "energy": 95.0,
+   "refill": -8.0,
+   "degradation": -88.0
+  },
+  "SE2": {
+   "net": 56.0,
+   "typical_low": 15.0,
+   "typical_high": 220.0,
+   "recent_mean": 106.0,
+   "days": 30,
+   "capacity": 36.0,
+   "capacity_known": true,
+   "energy": 139.0,
+   "refill": -13.0,
+   "degradation": -106.0
+  },
+  "SE3": {
+   "net": 102.0,
+   "typical_low": 4.0,
+   "typical_high": 280.0,
+   "recent_mean": 147.0,
+   "days": 30,
+   "capacity": 35.0,
+   "capacity_known": true,
+   "energy": 209.0,
+   "refill": -26.0,
+   "degradation": -116.0
+  },
+  "SE4": {
+   "net": 108.0,
+   "typical_low": -12.0,
+   "typical_high": 278.0,
+   "recent_mean": 157.0,
+   "days": 30,
+   "capacity": 37.0,
+   "capacity_known": true,
+   "energy": 205.0,
+   "refill": -24.0,
+   "degradation": -110.0
+  }
+ },
+ "margin_eur_mwh": 5.0,
+ "quantile": 0.2,
+ "rule": [
+  "mFRR capacity market: offer the megawatt, up direction, in every hour of the day (gate 07:30 the day before).",
+  "mFRR energy market: in every quarter of a held hour, an energy bid at the price in the issue (gate 45 minutes before the quarter).",
+  "Day-ahead market: a buy order for the quarters in the issue, at the issue's limit price (gate 12:00 the day before); down-regulation refills the store when not holding.",
+  "Take every activation the market clears; never run a deliberate imbalance; keep the store able to deliver two quarters at full power."
+ ],
+ "code_commit": "a156b98",
+ "sha256": "02201096caefa3fb3c6b043c939b37f8eca0425fdc82665a904a32b95f4b290e",
+ "backfill": false,
+ "late": false,
+ "rules": "battery issue: the strategy's actions for the delivery day from the published day-ahead prices; released at once"
+}
