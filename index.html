@@ -56,7 +56,7 @@
   .issue-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); border:1px solid var(--line); background:#fff; }
   .issue-grid > div { padding:24px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:8px; min-width:0; } .issue-grid > div:last-child { border-right:0; }
   .issue-grid .t { font-family:"Geist Mono",Menlo,monospace; font-size:32px; font-weight:600; line-height:1; } .issue-grid .d { font-size:14px; color:var(--muted); }
-  .proof { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; border:1px solid var(--line); background:#fff; margin-top:40px; }
+  .proof { display:grid; grid-template-columns:1.4fr 1fr; border:1px solid var(--line); background:#fff; margin-top:40px; }
   .proof > div { padding:40px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:12px; min-width:0; } .proof > div:last-child { border-right:0; }
   .proof .big { font-family:"Geist Mono",Menlo,monospace; font-weight:600; line-height:0.9; letter-spacing:-0.05em; font-size:clamp(56px, 5vw, 96px); }
   .proof .huge { font-size:clamp(72px, 8.75vw, 168px); color:var(--blue); }
@@ -196,7 +196,7 @@
 <body>
 <header class="wrap">
   <a href="./" class="cap" style="color:var(--ink)">Ancillary Services Insights</a>
-  <nav class="cap"><span class="br" aria-hidden="true"></span><a href="app.html#live">Live</a><a href="app.html#forecasts">Markets</a><a href="app.html#record">Record</a><a href="app.html#value">Value</a><a href="app.html#battery">Batteries</a><a href="app.html#method">Method</a><a href="app.html#experiments">Experiments</a><a href="#join" class="btn">Get tomorrow's forecast <span class="arr">→</span></a></nav>
+  <nav class="cap"><span class="br" aria-hidden="true"></span><a href="app.html#live">Live</a><a href="app.html#record">Record</a><a href="app.html#value">Value</a><a href="app.html#battery">Batteries</a><a href="app.html#method">Method</a><a href="app.html#experiments">Experiments</a><a href="#join" class="btn">Get tomorrow's forecast <span class="arr">→</span></a></nav>
 </header>
 <div class="nextwrap"><div class="wrap next" id="next"></div></div>
 
@@ -242,30 +242,11 @@
   <div class="cap" style="color:var(--acc)" data-reveal>Does it work · 210 days scored, plus every live issue since 11 Sep 2026</div>
   <div class="proof">
     <div><span class="big huge">−40%</span><span class="lbl">Less error</span><span class="sub">than assuming today looks like yesterday — spot SE3, every live forecast</span></div>
-    <div><span class="big">2.6<span style="font-size:.42em;color:var(--muted)">/4</span></span><span class="lbl">Cheapest hours named</span><span class="sub">of each day's four, on average</span></div>
-    <div><span class="big">210</span><span class="lbl">Days scored</span><span class="sub">Feb to Aug 2026, every hour</span></div>
-    <div><span class="big">14</span><span class="lbl">Markets</span><span class="sub">four spot areas, ten reserve series</span></div>
+    <div><span class="big">210</span><span class="lbl">Days scored</span><span class="sub">Feb to Aug 2026, every hour, 14 markets</span></div>
   </div>
   <div class="more" data-reveal><a href="app.html#record" class="btn">See every issue, hour by hour <span class="arr">→</span></a><span style="font-size:14px;color:var(--muted)">The full record: every forecast against what cleared, for all 14 markets, with <a href="app.html#method">how it is judged</a>.</span></div>
 </section>
 
-<section class="wrap">
-  <div class="where">
-    <div style="display:flex;flex-direction:column;gap:24px" data-reveal>
-      <div class="cap" style="color:var(--acc)">Where it works</div><h2>Four areas. Ten reserve series.</h2>
-      <div class="mapwrap">
-        <svg viewBox="0 0 300 640" width="300" height="640" aria-label="Map of Sweden's four price areas" role="img">
-          <defs><clipPath id="se"><path d="M150 8 C190 20,215 60,225 110 C240 170,232 230,238 290 C246 350,240 410,225 470 C212 530,200 580,170 630 C140 632,110 600,95 560 C70 500,60 440,68 380 C76 320,60 260,70 200 C80 140,100 70,150 8 Z"/></clipPath></defs>
-          <g clip-path="url(#se)" id="zones"></g>
-          <path d="M150 8 C190 20,215 60,225 110 C240 170,232 230,238 290 C246 350,240 410,225 470 C212 530,200 580,170 630 C140 632,110 600,95 560 C70 500,60 440,68 380 C76 320,60 260,70 200 C80 140,100 70,150 8 Z" fill="none" stroke="#101816" stroke-width="1.5"/>
-          <g stroke="#101816" stroke-dasharray="3 3"><line x1="60" y1="200" x2="250" y2="200"/><line x1="55" y1="350" x2="250" y2="350"/><line x1="65" y1="520" x2="225" y2="520"/></g>
-          <g font-family="Geist Mono, Menlo, monospace" font-size="14" font-weight="700" fill="#101816" pointer-events="none"><text x="128" y="118">SE1</text><text x="128" y="283">SE2</text><text x="132" y="443">SE3</text><text x="128" y="588">SE4</text></g>
-        </svg>
-        <div class="card" id="area-card"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="wrap hard">
   <div class="split">
@@ -285,7 +266,7 @@
   </form>
 </section>
 
-<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#forecasts">Markets</a> · <a href="app.html#record">Record</a> · <a href="app.html#value">Value</a> · <a href="app.html#battery">Batteries</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-19 17:04</span></footer>
+<footer class="wrap"><span><a href="app.html#live">Live</a> · <a href="app.html#record">Record</a> · <a href="app.html#value">Value</a> · <a href="app.html#battery">Batteries</a> · <a href="app.html#method">Method</a> · <a href="app.html#experiments">Experiments</a> · Ancillary Services Insights by Jacob's Code · <a href="mailto:contact@jacobscode.com">contact@jacobscode.com</a> · <a href="https://github.com/JacobsCodeCom/ancillary-markets" rel="noopener">Forecast files and proofs</a></span><span class="num">Model v0.10 · page built 2026-09-19 21:17</span></footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="panel">
@@ -392,10 +373,6 @@ function paint() {
   $("area-tabs").innerHTML = AREAS.map(a => `<button class="tab" data-area="${a}" aria-pressed="${state.market === "spot" && state.area === a}">${a}</button>`).join("");
   render("hero-chart", s, 760, "hero-title", "hero-meta"); $("hero-summary").textContent = summary(s);
   $("hero-note").textContent = state.market === "spot" ? `Click an area. The chart is the real issue — ${s.issued} for ${s.day}.` : `${s.name}: the newest issue, already cleared at the auction.`;
-  const ca = state.hover || state.area; const a = H.areas[ca]; const st = H.stats["power_price_" + ca]; const pk = Math.max.apply(null, a.forecast); const ipk = a.forecast.indexOf(pk);
-  const card = $("area-card"); card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
-  card.innerHTML = `<span class="cap" style="color:var(--acc)">${ca} · ${esc(a.day)}</span><span class="b">${fmt(pk)} ${esc(a.unit)}</span><span style="font-size:12px;color:var(--muted)">forecast peak, ${String(ipk).padStart(2, "0")}:00</span><div class="g"><div><div class="v" style="color:var(--blue)">−${Math.round(st.skill * 100)}%</div><small>error vs yesterday</small></div><div><div class="v">${st.ordering >= 0 ? "+" : ""}${Math.round(st.ordering * 100)}%</div><small>hour ordering</small></div></div><span style="font-size:11px;color:var(--muted);margin-top:4px">hover an area · click to load it</span>`;
-  $("zones").innerHTML = AREAS.map((z, i) => { const yy = [0, 200, 350, 520][i], hh = [200, 150, 170, 120][i]; const on = (state.hover || state.area) === z; const sk = H.stats["power_price_" + z].skill; return `<rect class="zone${state.area === z ? " on" : ""}" data-zone="${z}" x="0" y="${yy}" width="300" height="${hh}" fill="rgba(30,97,177,${(on ? 0.45 + sk : 0.12 + sk * 0.5).toFixed(2)})"><title>${z}</title></rect>`; }).join("");
 }
 document.addEventListener("click", e => {
   const t = e.target.closest("[data-area],[data-market],[data-zone]"); if (!t) return;
@@ -403,8 +380,6 @@ document.addEventListener("click", e => {
   if (t.dataset.market) state.market = t.dataset.market;
   paint();
 });
-document.addEventListener("mouseover", e => { const z = e.target.closest("[data-zone]"); if (z && state.hover !== z.dataset.zone) { state.hover = z.dataset.zone; paint(); } });
-document.addEventListener("mouseout", e => { const z = e.target.closest("[data-zone]"); if (z && !e.relatedTarget?.closest?.("[data-zone]")) { state.hover = null; paint(); } });
 
 // static blocks
 (function () {
