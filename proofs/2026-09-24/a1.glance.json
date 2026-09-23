@@ -1,0 +1,11 @@
+[
+ {
+  "file": "forecasts/2026-09-24/a1.glance.csv",
+  "sha256": "400ef3e0169a0859fc93f108d4525f705548212bcd863f66bab78ceee7a1c14b",
+  "tsa": "https://freetsa.org/tsr",
+  "tsa_time": null,
+  "tsr": "forecasts/2026-09-24/a1.glance.csv.tsr",
+  "verified": false,
+  "verify": "openssl ts -verify -data /Users/jacobekedahl/Projects/.worktrees/intire-sunstreet-energy/s1/forecasts/2026-09-24/a1.glance.csv -in /Users/jacobekedahl/Projects/.worktrees/intire-sunstreet-energy/s1/forecasts/2026-09-24/a1.glance.csv.tsr -CAfile /Users/jacobekedahl/Projects/.worktrees/intire-sunstreet-energy/s1/deploy/tsa/freetsa_cacert.pem: Using configuration from /opt/homebrew/etc/openssl@3/openssl.cnf\nC060AFFC01000000:error:1780006B:time stamp routines:ts_check_status_info:no time stamp token:crypto/ts/ts_rsp_verify.c:389:status code: rejection, status text: Error during serial number generation., failure codes: addInfoNotAvailable"
+ }
+]
