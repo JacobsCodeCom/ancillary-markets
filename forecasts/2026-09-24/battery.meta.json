@@ -1,0 +1,96 @@
+{
+ "track": "battery",
+ "track_name": "Battery brief",
+ "version": "v0.2",
+ "issue": "battery",
+ "issue_date": "2026-09-24",
+ "target_date": "2026-09-25",
+ "issued_at_local": "2026-09-24T17:03:12+02:00",
+ "gates": "energy bids for the target day 45 minutes before each quarter; the capacity offer and the day-ahead limit order in this issue are for the day after the target (gates 07:30 and 12:00 on the target day), since both gates for the target day close before its prices are public",
+ "thresholds_eur_mwh": {
+  "SE1": 7.15,
+  "SE2": 1.99,
+  "SE3": 4.43,
+  "SE4": 5.25
+ },
+ "buy_quarters": {
+  "SE1": 0,
+  "SE2": 0,
+  "SE3": 0,
+  "SE4": 0
+ },
+ "next_day": {
+  "target_date": "2026-09-26",
+  "capacity_gate": "2026-09-25T07:30",
+  "day_ahead_gate": "2026-09-25T12:00",
+  "thresholds_eur_mwh": {
+   "SE1": 7.15,
+   "SE2": 1.99,
+   "SE3": 4.43,
+   "SE4": 5.41
+  }
+ },
+ "expected": {
+  "SE1": {
+   "net": 276.0,
+   "typical_low": 4.0,
+   "typical_high": 194.0,
+   "recent_mean": 86.0,
+   "days": 30,
+   "capacity": 273.0,
+   "capacity_known": true,
+   "energy": 100.0,
+   "refill": -11.0,
+   "degradation": -86.0
+  },
+  "SE2": {
+   "net": 289.0,
+   "typical_low": 3.0,
+   "typical_high": 203.0,
+   "recent_mean": 101.0,
+   "days": 30,
+   "capacity": 272.0,
+   "capacity_known": true,
+   "energy": 145.0,
+   "refill": -21.0,
+   "degradation": -108.0
+  },
+  "SE3": {
+   "net": 327.0,
+   "typical_low": -21.0,
+   "typical_high": 286.0,
+   "recent_mean": 138.0,
+   "days": 30,
+   "capacity": 271.0,
+   "capacity_known": true,
+   "energy": 201.0,
+   "refill": -32.0,
+   "degradation": -114.0
+  },
+  "SE4": {
+   "net": 367.0,
+   "typical_low": -6.0,
+   "typical_high": 300.0,
+   "recent_mean": 164.0,
+   "days": 30,
+   "capacity": 291.0,
+   "capacity_known": true,
+   "energy": 220.0,
+   "refill": -33.0,
+   "degradation": -112.0
+  }
+ },
+ "margin_eur_mwh": 5.0,
+ "quantile": 0.2,
+ "rule": [
+  "mFRR capacity market: offer the megawatt, up direction, in every hour of the day (gate 07:30 the day before).",
+  "mFRR energy market: in every quarter of a held hour, an energy bid at the price in the issue (gate 45 minutes before the quarter).",
+  "Day-ahead market: a buy order for the quarters in the issue, at the issue's limit price (gate 12:00 the day before); down-regulation refills the store when not holding.",
+  "Take every activation the market clears; never run a deliberate imbalance; keep the store able to deliver two quarters at full power."
+ ],
+ "code_commit": "729dba8",
+ "sha256": "df4a64402aec06411f21c93170ac16f2aea2c60b3f9b3d277aace3c0b1d14e1e",
+ "backfill": false,
+ "late": false,
+ "rules": "battery issue: the strategy's actions for the delivery day from the published day-ahead prices; released at once"
+}
