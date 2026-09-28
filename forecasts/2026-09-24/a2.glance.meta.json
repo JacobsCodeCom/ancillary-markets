@@ -1,0 +1,20 @@
+{
+ "track": "glance",
+ "track_name": "Glance",
+ "version": "v0.2",
+ "issue": "a2",
+ "issue_date": "2026-09-24",
+ "issued_at_local": "2026-09-24T17:12:17.695478+02:00",
+ "wall_clock_local": "2026-09-24T17:13:06+02:00",
+ "gates": "FCR auction 2 18:00",
+ "series": [
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "code_commit": "ab08fe4",
+ "sha256": "788267e3428de787752d521c6930fb589afeb68b7a53967b4cdf367e6892e2f8",
+ "backfill": false,
+ "late": false,
+ "rules": "shadow track: computed after the main issue from the same information set, never published on the page before the day clears; target hours are the delivery day (the day after the issue date); P10/P90 where the track produces them"
+}
