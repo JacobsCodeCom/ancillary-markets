@@ -46,9 +46,9 @@
   h1 { font-size:clamp(44px, 3.85vw, 74px); font-weight:600; line-height:0.98; letter-spacing:-0.04em; margin:0; text-wrap:balance; }
   h2 { font-size:clamp(32px, 2.5vw, 48px); font-weight:600; line-height:1.05; letter-spacing:-0.035em; margin:0; text-wrap:balance; }
   .lead { font-size:19px; color:var(--muted); line-height:1.5; max-width:36ch; }
-  .hero { display:grid; grid-template-columns:minmax(300px, 0.85fr) minmax(0, 1.4fr); gap:0; min-height:calc(100vh - 64px); width:100%; }
-  .hero .copy { padding:96px 48px 72px 0; border-right:1px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; gap:40px; min-width:0; }
-  .hero .plot { padding:40px 0 40px 48px; display:flex; flex-direction:column; gap:12px; min-width:0; }
+  .hero { display:grid; grid-template-columns:minmax(300px, 0.85fr) minmax(0, 1.4fr); gap:0; align-items:stretch; width:100%; }
+  .hero .copy { padding:72px 48px 56px 0; border-right:1px solid var(--line); display:flex; flex-direction:column; justify-content:flex-start; gap:48px; min-width:0; }
+  .hero .plot { padding:40px 0 40px 48px; display:flex; flex-direction:column; gap:12px; min-width:0; justify-content:center; }
   .tabs { display:flex; gap:0; flex-wrap:wrap; }
   .tab { font-family:"Geist Mono",Menlo,monospace; font-size:13px; font-weight:600; padding:10px 16px; border:1px solid var(--line); margin-right:-1px; margin-bottom:-1px; cursor:pointer; background:#fff; color:var(--muted); }
   .tab[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
@@ -118,9 +118,10 @@
   .hero .copy > div:first-child > :nth-child(2) { animation-delay:.1s; } .hero .copy > div:first-child > :nth-child(3) { animation-delay:.22s; }
   .hero .copy > div:last-child { animation:rise .8s cubic-bezier(.2,.7,.2,1) .4s both; }
   .hero .plot { animation:rise 1s cubic-bezier(.2,.7,.2,1) .25s both; position:relative; isolation:isolate; overflow:hidden; }
-  .hero .plot::before, .hero .plot::after { content:""; position:absolute; z-index:-1; border-radius:50%; pointer-events:none; will-change:transform; }
-  .hero .plot::before { width:55%; aspect-ratio:1; right:-10%; top:-5%; background:radial-gradient(closest-side, rgba(127,214,196,.38), rgba(127,214,196,0)); animation:drift 14s ease-in-out infinite; }
-  .hero .plot::after { width:45%; aspect-ratio:1; left:5%; bottom:5%; background:radial-gradient(closest-side, rgba(30,97,177,.22), rgba(30,97,177,0)); animation:drift2 18s ease-in-out infinite; }
+  /* soft washes behind the chart only — kept small so they don't read as empty-space blobs */
+  .hero .plot::before, .hero .plot::after { content:""; position:absolute; z-index:-1; border-radius:50%; pointer-events:none; will-change:transform; opacity:.85; }
+  .hero .plot::before { width:42%; aspect-ratio:1; right:-6%; top:8%; background:radial-gradient(closest-side, rgba(127,214,196,.28), rgba(127,214,196,0)); animation:drift 14s ease-in-out infinite; }
+  .hero .plot::after { width:34%; aspect-ratio:1; left:8%; bottom:18%; background:radial-gradient(closest-side, rgba(30,97,177,.16), rgba(30,97,177,0)); animation:drift2 18s ease-in-out infinite; }
   .hero .plot > * { position:relative; }
   /* a mint highlighter sweeps under the second half of the headline once the copy is in */
   h1 mark { background:none; color:inherit; position:relative; z-index:0; white-space:nowrap; }
