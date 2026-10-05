@@ -386,7 +386,8 @@ document.addEventListener("click", e => {
   const sp = H.spike; const pk = Math.max.apply(null, sp.realised); const ipk = sp.realised.indexOf(pk); const fc = sp.forecast[ipk];
   sp.mark = ipk; $("spike-title").textContent = `${sp.name} · ${sp.day}`; put("spike-chart", sp, 420);
   $("spike-fc").textContent = fmt(fc); $("spike-act").textContent = fmt(pk);
-  const ca = sp.cheapest_hit; $("spike-text").textContent = `On ${sp.day} the forecast named ${ca} of the four cheapest hours and put the peak in the right place — and said ${fmt(fc)} for the ${String(ipk).padStart(2, "0")}:00 hour that cleared at ${fmt(pk)}. The record stays public so that this is never a surprise to a customer.`;
+  const ca = sp.cheapest_hit;
+  $("spike-text").innerHTML = `On ${sp.day} the forecast named ${ca} of the four cheapest hours and put the peak in the right place — and said ${fmt(fc)} for the ${String(ipk).padStart(2, "0")}:00 hour that cleared at ${fmt(pk)}. The record stays public so that this is never a surprise to a customer. Beside the live line we now run a groundbreaking model side by side — <b>Scout</b> — that we believe can start catching these spikes; our goal is to solve this within the year. <a href="app.html#experiments">Follow Scout on Experiments →</a>`;
   paint();
   // the ticker: every market on the page, twice over so the loop is seamless
   const all = AREAS.map(a => H.areas[a]).concat(Object.values(H.reserves)).filter(Boolean);
