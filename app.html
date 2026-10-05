@@ -29,7 +29,7 @@
   /* the explorer shares the home page's system: one ground, ink lines, mono figures, no radii (dashboard/home.html) */
   :root { --bg:#f3f6f5; --ink:#101816; --muted:#5f6b68; --line:#101816; --soft:#d9e0dd; --acc:#008575; --blue:#1e61b1; --red:#c0392b; --mint:#7fd6c4; --card:#fff;
           --teal:var(--acc); --orange:var(--red); --green:var(--acc); --gold:#d9a21b; --violet:#5b4bd6; --blue-soft:#e6f2ee; --ink2:var(--muted); --good:var(--acc); --bad:var(--red); --mono:"Geist Mono",Menlo,Consolas,monospace;
-          --page:1120px; --gutter:clamp(16px, 3.75vw, 48px); }
+          --page:1400px; --gutter:clamp(16px, 2.5vw, 48px); }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:"Geist",-apple-system,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.5; font-variant-numeric:tabular-nums; }
@@ -38,7 +38,7 @@
   .cap { font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
   .btn { font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:0.06em; padding:14px 20px; background:var(--ink); color:var(--bg); border:0; cursor:pointer; text-transform:uppercase; display:inline-block; transition:transform .2s, box-shadow .2s, background .2s; }
   .btn:hover { background:#2a3733; text-decoration:none; transform:translateY(-2px); box-shadow:0 10px 24px rgba(16,24,22,.18); } .btn:active { transform:none; box-shadow:none; }
-  .wrap { width:min(100%, var(--page)); margin-inline:auto; padding-inline:var(--gutter); box-sizing:border-box; }
+  .wrap { width:100%; padding-inline:max(var(--gutter), calc((100vw - var(--page)) / 2)); }
   header { display:flex; justify-content:space-between; align-items:center; height:64px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(243,246,245,0.92); backdrop-filter:blur(8px); z-index:5; }
   header nav { display:flex; gap:28px; align-items:center; } header nav a { color:var(--muted); position:relative; transition:color .2s; } header nav a:hover { color:var(--ink); text-decoration:none; }
   header nav a:not(.btn)::after { content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; background:var(--acc); transform:scaleX(0); transform-origin:left; transition:transform .3s cubic-bezier(.2,.7,.2,1); }

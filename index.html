@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500;600;700&display=swap">
 <style>
-  :root { --bg:#f3f6f5; --ink:#101816; --muted:#5f6b68; --line:#101816; --soft:#d9e0dd; --acc:#008575; --blue:#1e61b1; --red:#c0392b; --mint:#7fd6c4; --page:1120px; --gutter:clamp(16px, 3.75vw, 48px); }
+  :root { --bg:#f3f6f5; --ink:#101816; --muted:#5f6b68; --line:#101816; --soft:#d9e0dd; --acc:#008575; --blue:#1e61b1; --red:#c0392b; --mint:#7fd6c4; --page:1400px; --gutter:clamp(16px, 2.5vw, 48px); }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:"Geist",-apple-system,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.5; font-variant-numeric:tabular-nums; }
@@ -31,23 +31,22 @@
   .cap { font-family:"Geist Mono",Menlo,Consolas,monospace; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
   .btn { font-family:"Geist Mono",Menlo,monospace; font-size:13px; font-weight:600; letter-spacing:0.06em; padding:14px 20px; background:var(--ink); color:var(--bg); border:0; cursor:pointer; text-transform:uppercase; }
   .btn:hover { background:#2a3733; text-decoration:none; }
-  /* Cap the reading column on wide screens. Borders stay on the element; side margins grow via auto. */
-  .wrap { width:min(100%, var(--page)); margin-inline:auto; padding-inline:var(--gutter); box-sizing:border-box; }
+  /* Full-bleed bars; content column ~--page via growing side padding (elements stay width:100%) */
+  .wrap { width:100%; padding-inline:max(var(--gutter), calc((100vw - var(--page)) / 2)); }
   header { display:flex; justify-content:space-between; align-items:center; height:64px; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(243,246,245,0.92); backdrop-filter:blur(8px); z-index:5; }
   header nav { display:flex; gap:28px; align-items:center; } header nav a { color:var(--muted); } header nav a:hover { color:var(--ink); text-decoration:none; }
   header .btn { padding:10px 16px; } header .br { display:none; }
   header .brand { display:inline-flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; } header .brand:hover { text-decoration:none; color:var(--ink); }
   header .brand img { width:32px; height:32px; display:block; flex:0 0 auto; border-radius:7px; }
   header .brand .cap { color:var(--ink); line-height:1.15; max-width:14rem; }
-  .nextwrap { border-bottom:1px solid var(--line); background:#fff; overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); } .next { padding:0; overflow:visible; } .next .row { display:inline-flex; gap:0; animation:tick 45s linear infinite; will-change:transform; } .nextwrap:hover .row { animation-play-state:paused; } .next .it { display:inline-flex; gap:12px; align-items:center; padding:11px 28px 11px 0; margin-right:28px; border-right:1px solid var(--line); font-family:"Geist Mono",Menlo,monospace; font-size:13px; color:var(--muted); } .next .it b { color:var(--ink); font-weight:600; } .next .it a { color:var(--acc); font-weight:600; } .next:empty { display:none; }
+  .nextwrap { border-bottom:1px solid var(--line); background:#fff; overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); } .next { padding-block:0; overflow:visible; } .next .row { display:inline-flex; gap:0; animation:tick 45s linear infinite; will-change:transform; } .nextwrap:hover .row { animation-play-state:paused; } .next .it { display:inline-flex; gap:12px; align-items:center; padding:11px 28px 11px 0; margin-right:28px; border-right:1px solid var(--line); font-family:"Geist Mono",Menlo,monospace; font-size:13px; color:var(--muted); } .next .it b { color:var(--ink); font-weight:600; } .next .it a { color:var(--acc); font-weight:600; } .next:empty { display:none; }
   
   section { border-top:1px solid var(--line); padding-block:88px; }
   section.first { border-top:0; padding-block:0; }
   h1 { font-size:clamp(44px, 3.85vw, 74px); font-weight:600; line-height:0.98; letter-spacing:-0.04em; margin:0; text-wrap:balance; }
   h2 { font-size:clamp(32px, 2.5vw, 48px); font-weight:600; line-height:1.05; letter-spacing:-0.035em; margin:0; text-wrap:balance; }
   .lead { font-size:19px; color:var(--muted); line-height:1.5; max-width:36ch; }
-  /* hard cap: hero never exceeds --page, even on ultra-wide */
-  .hero { display:grid; grid-template-columns:minmax(280px, 380px) minmax(0, 1fr); gap:0; min-height:calc(100vh - 64px); width:100%; }
+  .hero { display:grid; grid-template-columns:minmax(300px, 0.85fr) minmax(0, 1.4fr); gap:0; min-height:calc(100vh - 64px); width:100%; }
   .hero .copy { padding:96px 48px 72px 0; border-right:1px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; gap:40px; min-width:0; }
   .hero .plot { padding:40px 0 40px 48px; display:flex; flex-direction:column; gap:12px; min-width:0; }
   .tabs { display:flex; gap:0; flex-wrap:wrap; }
