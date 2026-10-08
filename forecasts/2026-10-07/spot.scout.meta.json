@@ -1,0 +1,23 @@
+{
+ "track": "scout",
+ "track_name": "Scout",
+ "version": "v0.3",
+ "issue": "spot",
+ "issue_date": "2026-10-07",
+ "issued_at_local": "2026-10-07T11:08:14.340632+02:00",
+ "wall_clock_local": "2026-10-07T11:13:00+02:00",
+ "gates": "day-ahead 12:00",
+ "series": [
+  "power_price_SE1",
+  "power_price_SE2",
+  "power_price_SE3",
+  "power_price_SE4",
+  "mfrr_up",
+  "mfrr_down"
+ ],
+ "code_commit": "451bd22",
+ "sha256": "bcf8ffb5ea3be2681d16c01998e001755cf2dff18b67cc27e2507e7bb09f868a",
+ "backfill": false,
+ "late": false,
+ "rules": "shadow track: computed after the main issue from the same information set, never published on the page before the day clears; target hours are the delivery day (the day after the issue date); P10/P90 where the track produces them"
+}
