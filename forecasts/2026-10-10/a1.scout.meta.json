@@ -1,0 +1,25 @@
+{
+ "track": "scout",
+ "track_name": "Scout",
+ "version": "v0.3",
+ "issue": "a1",
+ "issue_date": "2026-10-10",
+ "issued_at_local": "2026-10-10T00:09:34.099387+02:00",
+ "wall_clock_local": "2026-10-10T00:16:53+02:00",
+ "gates": "FCR auction 1 00:30, mFRR CM 07:30",
+ "series": [
+  "fcr_n_a1",
+  "fcr_d_up_a1",
+  "fcr_d_down_a1",
+  "mfrr_cm_up",
+  "mfrr_cm_down",
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "code_commit": "1fa2fd6",
+ "sha256": "1bf0a0098df0801cdf3d4127d09ec62d2a5fc5d5bdb030c09b47415679fa2fea",
+ "backfill": false,
+ "late": false,
+ "rules": "shadow track: computed after the main issue from the same information set, never published on the page before the day clears; target hours are the delivery day (the day after the issue date); P10/P90 where the track produces them"
+}
