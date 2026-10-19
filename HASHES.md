@@ -225,3 +225,4 @@
 | 2026-10-19 00:08 | a1 | Scout v0.4 | 00:30 FCR auction 1, 07:30 mFRR capacity | `1e3ded7d099e44723bd327ad00350d7d44e4ef1f850a8bac95b86ce5630056a8` | Oct 18 22:12:07 2026 GMT | released after 2026-10-21 |
 | 2026-10-19 11:01 | spot | Echo v0.1 | 12:00 day-ahead | `d9db79c5bafd7241cb7413ac0ec806ab73dd01ddb77dba924ea0e293e73fdf90` | Oct 19 09:01:13 2026 GMT | released after 2026-10-21 |
 | 2026-10-19 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `64cb179f38b5f9a2e560159ff119c0a2c7525e020077b54e7ed81b2a3161300f` | Oct 19 09:01:03 2026 GMT | released after 2026-10-21 |
+| 2026-10-19 11:08 | spot | Scout v0.4 | 12:00 day-ahead | `de38f9e8a81ec3d531c1b5d765fa847d756c797e933af157962cacfce79d0cf1` | Oct 19 09:14:35 2026 GMT | released after 2026-10-21 |
