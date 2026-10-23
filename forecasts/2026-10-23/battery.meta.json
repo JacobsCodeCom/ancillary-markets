@@ -1,0 +1,118 @@
+{
+ "track": "battery",
+ "track_name": "Battery brief",
+ "version": "v0.3",
+ "issue": "battery",
+ "issue_date": "2026-10-23",
+ "target_date": "2026-10-24",
+ "issued_at_local": "2026-10-23T17:04:53+02:00",
+ "gates": "energy bids for the target day 45 minutes before each quarter; the capacity offer and the day-ahead limit order in this issue are for the day after the target (gates 07:30 and 12:00 on the target day), since both gates for the target day close before its prices are public",
+ "thresholds_eur_mwh": {
+  "SE1": 15.49,
+  "SE2": 24.87,
+  "SE3": 40.28,
+  "SE4": 107.78
+ },
+ "buy_quarters": {
+  "SE1": 26,
+  "SE2": 56,
+  "SE3": 91,
+  "SE4": 96
+ },
+ "next_day": {
+  "target_date": "2026-10-25",
+  "capacity_gate": "2026-10-24T07:30",
+  "day_ahead_gate": "2026-10-24T12:00",
+  "fcr_gate": "2026-10-24T00:30",
+  "thresholds_eur_mwh": {
+   "SE1": 15.74,
+   "SE2": 22.34,
+   "SE3": 33.19,
+   "SE4": 56.08
+  }
+ },
+ "strategy": {
+  "SE1": "fcr_n",
+  "SE2": "fcr_n",
+  "SE3": "mfrr_up",
+  "SE4": "mfrr_up"
+ },
+ "fcr_n": {
+  "E1": {
+   "mw": 0.532,
+   "band_low": 0.532,
+   "band_high": 0.532,
+   "aim": 0.532
+  },
+  "E2": {
+   "mw": 0.746,
+   "band_low": 0.746,
+   "band_high": 1.344,
+   "aim": 1.045
+  },
+  "intraday_spread_eur_mwh": 5.0
+ },
+ "expected": {
+  "SE1": {
+   "net": 242.0,
+   "typical_low": 211.0,
+   "typical_high": 340.0,
+   "recent_mean": 276.0,
+   "days": 29,
+   "capacity": 249.0,
+   "capacity_known": true,
+   "energy": 56.0,
+   "refill": -3.0,
+   "degradation": -60.0
+  },
+  "SE2": {
+   "net": 250.0,
+   "typical_low": 210.0,
+   "typical_high": 343.0,
+   "recent_mean": 283.0,
+   "days": 29,
+   "capacity": 249.0,
+   "capacity_known": true,
+   "energy": 66.0,
+   "refill": -6.0,
+   "degradation": -59.0
+  },
+  "SE3": {
+   "net": 184.0,
+   "typical_low": 66.0,
+   "typical_high": 404.0,
+   "recent_mean": 219.0,
+   "days": 29,
+   "capacity": 29.0,
+   "capacity_known": true,
+   "energy": 352.0,
+   "refill": -66.0,
+   "degradation": -130.0
+  },
+  "SE4": {
+   "net": 242.0,
+   "typical_low": 57.0,
+   "typical_high": 534.0,
+   "recent_mean": 277.0,
+   "days": 29,
+   "capacity": 30.0,
+   "capacity_known": true,
+   "energy": 405.0,
+   "refill": -84.0,
+   "degradation": -109.0
+  }
+ },
+ "margin_eur_mwh": 5.0,
+ "quantile": 0.2,
+ "rule": [
+  "mFRR capacity market: offer the megawatt, up direction, in every hour of the day (gate 07:30 the day before).",
+  "mFRR energy market: in every quarter of a held hour, an energy bid at the price in the issue (gate 45 minutes before the quarter).",
+  "Day-ahead market: a buy order for the quarters in the issue, at the issue's limit price (gate 12:00 the day before); down-regulation refills the store when not holding.",
+  "Take every activation the market clears; never run a deliberate imbalance; keep the store able to deliver two quarters at full power."
+ ],
+ "code_commit": "80bc038",
+ "sha256": "6345c961a580630916bf8a1c979040f4da31461a33584e21405169ae3df46a0f",
+ "backfill": false,
+ "late": false,
+ "rules": "battery issue: the strategy's actions for the delivery day from the published day-ahead prices; released at once"
+}
