@@ -273,3 +273,4 @@
 | 2026-10-25 17:06 | battery | Battery brief v0.3 |  | `7dc7dd641697737e86ec0bf6665326f39819b55ce1a9d6a8151e8130130c1311` | Oct 25 16:08:11 2026 GMT | released |
 | 2026-10-25 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `a6317f506f95b4764e91073c0c1bdeb257d33dea3e5ca35ec700015a689e2db2` | Oct 25 10:00:59 2026 GMT | released after 2026-10-27 |
 | 2026-10-26 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `90ca47282e866854f61e4a4fd7bd9addf3f57956c7209d58f3425d1bf2150590` | Oct 25 23:00:59 2026 GMT | released after 2026-10-28 |
+| 2026-10-26 00:05 | a1 | Scout v0.5 | 00:30 FCR auction 1, 07:30 mFRR capacity | `e273b317fe68d9468f354a9a092a2213dfb6cd8be83bab1eda3094c45f77baf4` | Oct 25 23:09:36 2026 GMT | released after 2026-10-28 |
