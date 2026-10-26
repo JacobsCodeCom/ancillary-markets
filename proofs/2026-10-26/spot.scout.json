@@ -1,0 +1,11 @@
+[
+ {
+  "file": "forecasts/2026-10-26/spot.scout.csv",
+  "sha256": "78bd00b81dddd7e0215ec092ca6e28653ae91e583e6353efaef113d2cfc9c192",
+  "tsa": "https://freetsa.org/tsr",
+  "tsa_time": "Oct 26 10:11:49 2026 GMT",
+  "tsr": "forecasts/2026-10-26/spot.scout.csv.tsr",
+  "verified": true,
+  "verify": "Verification: OK"
+ }
+]
