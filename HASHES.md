@@ -272,14 +272,14 @@
 | 2026-10-25 17:00 | a2 | Compass v0.10 | 18:00 FCR auction 2 | `2e1a583b7844168cd8dd48a54b43d98c28142ad70157eb3300e8b5bdf9408b7b` | Oct 25 16:01:00 2026 GMT | released |
 | 2026-10-25 17:06 | battery | Battery brief v0.3 |  | `7dc7dd641697737e86ec0bf6665326f39819b55ce1a9d6a8151e8130130c1311` | Oct 25 16:08:11 2026 GMT | released |
 | 2026-10-25 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `a6317f506f95b4764e91073c0c1bdeb257d33dea3e5ca35ec700015a689e2db2` | Oct 25 10:00:59 2026 GMT | released |
-| 2026-10-26 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `90ca47282e866854f61e4a4fd7bd9addf3f57956c7209d58f3425d1bf2150590` | Oct 25 23:00:59 2026 GMT | released after 2026-10-28 |
-| 2026-10-26 00:05 | a1 | Scout v0.5 | 00:30 FCR auction 1, 07:30 mFRR capacity | `e273b317fe68d9468f354a9a092a2213dfb6cd8be83bab1eda3094c45f77baf4` | Oct 25 23:09:36 2026 GMT | released after 2026-10-28 |
-| 2026-10-26 17:00 | a2 | Compass v0.10 | 18:00 FCR auction 2 | `64f8d28054bd9d10e478865e3a20701a59f1d4a57724349c0c1733c5535a7cda` | Oct 26 16:01:07 2026 GMT | released after 2026-10-28 |
-| 2026-10-26 17:12 | a2 | Scout v0.5 | 18:00 FCR auction 2 | `5251c3777214c181cfbbf4e57f9cccff1508d416cef34a97ab3621740bf39052` | Oct 26 16:17:24 2026 GMT | released after 2026-10-28 |
+| 2026-10-26 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `90ca47282e866854f61e4a4fd7bd9addf3f57956c7209d58f3425d1bf2150590` | Oct 25 23:00:59 2026 GMT | released |
+| 2026-10-26 00:05 | a1 | Scout v0.5 | 00:30 FCR auction 1, 07:30 mFRR capacity | `e273b317fe68d9468f354a9a092a2213dfb6cd8be83bab1eda3094c45f77baf4` | Oct 25 23:09:36 2026 GMT | released |
+| 2026-10-26 17:00 | a2 | Compass v0.10 | 18:00 FCR auction 2 | `64f8d28054bd9d10e478865e3a20701a59f1d4a57724349c0c1733c5535a7cda` | Oct 26 16:01:07 2026 GMT | released |
+| 2026-10-26 17:12 | a2 | Scout v0.5 | 18:00 FCR auction 2 | `5251c3777214c181cfbbf4e57f9cccff1508d416cef34a97ab3621740bf39052` | Oct 26 16:17:24 2026 GMT | released |
 | 2026-10-26 17:05 | battery | Battery brief v0.3 |  | `e57be1e319c2b754e4b963612d274c76b05edf1c3534b84f72ce7a8a863bd135` | Oct 26 16:07:01 2026 GMT | released |
-| 2026-10-26 11:01 | spot | Echo v0.1 | 12:00 day-ahead | `020610e46a5a866834c8d6a83c81332db6591158def769561ea8112a67db38fd` | Oct 26 10:01:09 2026 GMT | released after 2026-10-28 |
-| 2026-10-26 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `34757aabb2db3190685f6382e9f45803d30aba77ceed7f4f66c9d1a35c40c2b8` | Oct 26 10:00:58 2026 GMT | released after 2026-10-28 |
-| 2026-10-26 11:06 | spot | Scout v0.5 | 12:00 day-ahead | `78bd00b81dddd7e0215ec092ca6e28653ae91e583e6353efaef113d2cfc9c192` | Oct 26 10:11:49 2026 GMT | released after 2026-10-28 |
+| 2026-10-26 11:01 | spot | Echo v0.1 | 12:00 day-ahead | `020610e46a5a866834c8d6a83c81332db6591158def769561ea8112a67db38fd` | Oct 26 10:01:09 2026 GMT | released |
+| 2026-10-26 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `34757aabb2db3190685f6382e9f45803d30aba77ceed7f4f66c9d1a35c40c2b8` | Oct 26 10:00:58 2026 GMT | released |
+| 2026-10-26 11:06 | spot | Scout v0.5 | 12:00 day-ahead | `78bd00b81dddd7e0215ec092ca6e28653ae91e583e6353efaef113d2cfc9c192` | Oct 26 10:11:49 2026 GMT | released |
 | 2026-10-27 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `673883dd5488497b6ca3b196f50ff65af2f68b271ca501ea6cb4cda8bd7dfc19` | Oct 26 23:01:05 2026 GMT | released after 2026-10-29 |
 | 2026-10-27 00:05 | a1 | Scout v0.5 | 00:30 FCR auction 1, 07:30 mFRR capacity | `52504ce41270ab1af1cfd1fb762f656477fe817f6e380a3f82c89dcb9cc353d5` | Oct 26 23:10:30 2026 GMT | released after 2026-10-29 |
 | 2026-10-27 17:00 | a2 | Compass v0.10 | 18:00 FCR auction 2 | `35acddd96a809b3b941e07aa138c5f275e84d0e5451ae88a164d58c226182047` | Oct 27 16:00:54 2026 GMT | released after 2026-10-29 |
@@ -288,3 +288,4 @@
 | 2026-10-27 11:01 | spot | Echo v0.1 | 12:00 day-ahead | `0e74a04f3502d96552e663cd05759e3cefb0992256d59b2cb4044d7d569e160d` | Oct 27 10:01:10 2026 GMT | released after 2026-10-29 |
 | 2026-10-27 11:00 | spot | Compass v0.10 | 12:00 day-ahead | `ea7e68df296ddd2fdb744714591532da5ae4968984bdf7f63ec175a7175324af` | Oct 27 10:01:00 2026 GMT | released after 2026-10-29 |
 | 2026-10-27 11:05 | spot | Scout v0.5 | 12:00 day-ahead | `69855b4cb3fe8dcebf8dea466a6cd1c19b4cf818d7758223e73c4576c8d1583b` | Oct 27 10:10:08 2026 GMT | released after 2026-10-29 |
+| 2026-10-28 00:00 | a1 | Compass v0.10 | 00:30 FCR auction 1, 07:30 mFRR capacity | `b8581491fca7e5b69794116f2a60786d235b0bb9244eed1704eb552918825a68` | Oct 27 23:01:08 2026 GMT | released after 2026-10-30 |
