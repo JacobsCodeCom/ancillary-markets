@@ -1,0 +1,11 @@
+[
+ {
+  "file": "forecasts/2026-11-04/a1.csv",
+  "sha256": "6ba23eda6b1a2c709f32f5fb003c3f8fb06fcb431564a79c55a47e302d978cfe",
+  "tsa": "https://freetsa.org/tsr",
+  "tsa_time": "Nov  3 23:01:09 2026 GMT",
+  "tsr": "forecasts/2026-11-04/a1.csv.tsr",
+  "verified": true,
+  "verify": "Verification: OK"
+ }
+]
