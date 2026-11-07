@@ -1,0 +1,35 @@
+{
+ "issue": "a1",
+ "issue_date": "2026-11-06",
+ "issued_at_local": "2026-11-06T00:00:46.147220+01:00",
+ "wall_clock_local": "2026-11-06T00:00:46+01:00",
+ "gates": "FCR auction 1 00:30, mFRR CM 07:30 (auction-2 series included so the sell-in-A1-or-hold decision is on the record; from 10 Sep 2026)",
+ "series": [
+  "fcr_n_a1",
+  "fcr_d_up_a1",
+  "fcr_d_down_a1",
+  "mfrr_cm_up",
+  "mfrr_cm_down",
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "model_version": "v0.10",
+ "track": "compass",
+ "track_name": "Compass",
+ "version": "v0.10",
+ "code_commit": "b3d937d",
+ "data_freshness_utc": {
+  "power_price_SE3": "2026-11-06 22:00:00",
+  "fcr_n_a1": "2026-11-06 22:00:00",
+  "fcr_n_a2": "2026-11-06 22:00:00",
+  "mfrr_cm_up": "2026-11-06 22:00:00",
+  "mfrr_up": "2026-11-05 22:00:00",
+  "up_reg_price_SE3": "2026-11-05 21:00:00",
+  "consumption_mwh_SE3": "2026-11-04 21:00:00",
+  "fcst_temperature_2m_previous_day1_SE3": "2026-11-06 22:00:00"
+ },
+ "sha256": "0bb7f5282365cad23fb0a08c2dcc2d294a786aced9413d5048c414b834b76e86",
+ "backfill": false,
+ "rules": "hours flagged published_at_issue were public at issue time and are not scored; naive = same hour on the most recent known day; P10/P90 = forecast + empirical residual quantiles"
+}
