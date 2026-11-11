@@ -1,0 +1,33 @@
+{
+ "issue": "spot",
+ "issue_date": "2026-11-10",
+ "issued_at_local": "2026-11-10T11:01:06.608465+01:00",
+ "wall_clock_local": "2026-11-10T11:01:06+01:00",
+ "gates": "day-ahead 12:00",
+ "series": [
+  "power_price_SE1",
+  "power_price_SE2",
+  "power_price_SE3",
+  "power_price_SE4",
+  "mfrr_up",
+  "mfrr_down"
+ ],
+ "model_version": "v0.10",
+ "track": "compass",
+ "track_name": "Compass",
+ "version": "v0.10",
+ "code_commit": "5cdc677",
+ "data_freshness_utc": {
+  "power_price_SE3": "2026-11-10 22:00:00",
+  "fcr_n_a1": "2026-11-11 22:00:00",
+  "fcr_n_a2": "2026-11-10 22:00:00",
+  "mfrr_cm_up": "2026-11-11 22:00:00",
+  "mfrr_up": "2026-11-10 09:00:00",
+  "up_reg_price_SE3": "2026-11-10 09:00:00",
+  "consumption_mwh_SE3": "2026-11-09 21:00:00",
+  "fcst_temperature_2m_previous_day1_SE3": "2026-11-11 22:00:00"
+ },
+ "sha256": "e45545403e4ab494fb10812e85f8bb98ce567b6ed7fd6b6a90932a1b1a79320c",
+ "backfill": false,
+ "rules": "hours flagged published_at_issue were public at issue time and are not scored; naive = same hour on the most recent known day; P10/P90 = forecast + empirical residual quantiles"
+}
