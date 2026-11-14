@@ -1,0 +1,30 @@
+{
+ "issue": "a2",
+ "issue_date": "2026-11-13",
+ "issued_at_local": "2026-11-13T17:01:01.969699+01:00",
+ "wall_clock_local": "2026-11-13T17:01:01+01:00",
+ "gates": "FCR auction 2 18:00",
+ "series": [
+  "fcr_n_a2",
+  "fcr_d_up_a2",
+  "fcr_d_down_a2"
+ ],
+ "model_version": "v0.10",
+ "track": "compass",
+ "track_name": "Compass",
+ "version": "v0.10",
+ "code_commit": "dbb7a3c",
+ "data_freshness_utc": {
+  "power_price_SE3": "2026-11-14 22:00:00",
+  "fcr_n_a1": "2026-11-14 22:00:00",
+  "fcr_n_a2": "2026-11-13 22:00:00",
+  "mfrr_cm_up": "2026-11-14 22:00:00",
+  "mfrr_up": "2026-11-13 15:00:00",
+  "up_reg_price_SE3": "2026-11-13 14:00:00",
+  "consumption_mwh_SE3": "2026-11-12 21:00:00",
+  "fcst_temperature_2m_previous_day1_SE3": "2026-11-14 22:00:00"
+ },
+ "sha256": "7f1f2aa621414228fa2a01415ab2a76e963d033bbf8d81fdaf07c5133068a257",
+ "backfill": false,
+ "rules": "hours flagged published_at_issue were public at issue time and are not scored; naive = same hour on the most recent known day; P10/P90 = forecast + empirical residual quantiles"
+}
