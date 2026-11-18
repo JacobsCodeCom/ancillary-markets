@@ -1,0 +1,21 @@
+{
+ "track": "echo",
+ "track_name": "Echo",
+ "version": "v0.1",
+ "issue": "spot",
+ "issue_date": "2026-11-17",
+ "issued_at_local": "2026-11-17T11:02:05.265349+01:00",
+ "wall_clock_local": "2026-11-17T11:02:06+01:00",
+ "gates": "day-ahead 12:00",
+ "series": [
+  "power_price_SE1",
+  "power_price_SE2",
+  "power_price_SE3",
+  "power_price_SE4"
+ ],
+ "code_commit": "6f892e7",
+ "sha256": "20c16fff56257e2ecb8d069edc1c19f1c35ad55fdfcb57053175229f7b48d224",
+ "backfill": false,
+ "late": false,
+ "rules": "shadow track: computed after the main issue from the same information set, never published on the page before the day clears; target hours are the delivery day (the day after the issue date); P10/P90 where the track produces them"
+}
